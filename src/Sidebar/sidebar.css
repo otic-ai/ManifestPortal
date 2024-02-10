@@ -1,0 +1,38 @@
+.sidebar-list {
+    list-style-type: none;
+    padding: 0;
+    
+  }
+li {
+    border-bottom: 1px solid #ccc; /* Add bottom border */
+    padding: 10px 0; /* Add padding for spacing */
+    margin: 0; 
+  }
+li:hover {
+    color: orange
+}
+  
+li span {
+    margin-right: 10px; /* Add margin between icon and tag */
+  }
+
+.icon {
+    color: orange;
+    margin-bottom: -5px;
+}  
+
+.link {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Inherit color from parent */
+  }
+.sidebar-words {
+    font-size: 20px;
+    font-weight: bold;
+}  
+
+.actived {
+    border-bottom: 1px solid #ccc; /* Add bottom border */
+    padding: 10px 0; /* Add padding for spacing */
+    margin: 0; 
+    color: orange;  
+}
