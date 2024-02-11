@@ -1,5 +1,51 @@
 .home {
-    height: 100vh;
+    
     width: 100vw;
+   
    background-color: rgb(219, 214, 214); 
 }
+
+.top-header {
+    margin-top: 70px;
+margin-left: 4px;
+}
+.manifest-info {
+    width: 47vw;
+    max-width: 473px;
+}
+.cards {
+    width: 97.2vw;
+}
+.manifest-info2 {
+    flex-grow: 1;
+    min-width: 200px;
+    max-width: 95vw;
+    height: 97.3%;
+}
+@media (max-width: 650px) {
+    .item {
+      width: 95vw; 
+    }
+  
+    .manifest-info {
+        width: 99vw;
+        max-width: 95vw;
+    }
+    .cards {
+        width: 95vw;
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .manifest-insfo2 {
+       max-width: 65vw;
+    }
+    .item {
+      width: 100%; /* Make items take full width on smaller screens */
+    }
+    .manifest-info {
+        width: 48vw;
+    }
+  }  
+
+  
