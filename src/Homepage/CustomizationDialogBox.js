@@ -21,16 +21,9 @@ const MenuProps = {
 };
 
 const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
+    { value: 'hasjh', name: 'First Item' },
+  { value: 'sdjksdjjks', name: 'Second Item' },
+  { value: 'xyz123', name: 'Third Item' },
 ];
 
 function getStyles(name, personName, theme) {
@@ -77,13 +70,17 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function CustomizeForm() {
-  const [age, setAge] = React.useState('');
-  const [age1, setAge1] = React.useState('');
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  const [timeperiod, setTimeperiod] = React.useState('');
+  const [year, setYear] = React.useState('');
+  const [month, setMonth] = React.useState('');
+  const handletimeperiod = (event) => {
+    setTimeperiod(event.target.value);
   };
-  const handleChange1 = (event) => {
-    setAge1(event.target.value);
+  const handleChangeYear = (event) => {
+    setYear(event.target.value);
+  };
+  const handleChangeMonth = (event) => {
+    setMonth(event.target.value);
   };
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
@@ -102,26 +99,28 @@ export default function CustomizeForm() {
     <div>
       <FormControl fullWidth sx={{ m: 1 }} variant="standard">
       
-      <Typography id="demo" style={{ color: '#36454F' }}>Time Period</Typography>
+      <Typography id="demo" style={{ color: '#36454F',minWidth:'200px' }}>Data</Typography>
       <div style={{height:'10px'}}></div>
         <Select
          labelId="demo"
-         
+         name='data'
+         required
           value={personName}
           onChange={handleFormName}
         
           MenuProps={MenuProps}
           input={<BootstrapInput />}
         >
-          {names.map((name) => (
-            <MenuItem
-              key={name}
-              value={name}
-              style={getStyles(name, personName, theme)}
-            >
-              {name}
-            </MenuItem>
-          ))}
+       {names.map((item) => (
+  <MenuItem
+    key={item.value}
+    value={item.value}
+    style={getStyles(item.value, personName, theme)}
+  >
+    {item.name}
+  </MenuItem>
+))}
+
         </Select>
       </FormControl>
       <FormControl fullWidth sx={{ m: 1,minWidth:200  }} variant="standard">
@@ -130,9 +129,11 @@ export default function CustomizeForm() {
         <Select
           labelId="demo-customized-select-label"
           id="demo-customized-select"
-          value={age}
-          onChange={handleChange}
+          name='time'
+          value={timeperiod}
+          onChange={handletimeperiod}
           input={<BootstrapInput />}
+          required
         >
           <MenuItem value="">
             <em>None</em>
@@ -142,24 +143,62 @@ export default function CustomizeForm() {
           <MenuItem value={30}>Weekly</MenuItem>
         </Select>
       </FormControl>
-      <FormControl fullWidth sx={{ m: 1,minWidth:200  }} variant="standard">
-      <Typography id="demo" style={{ color: '#36454F' }}>Time Period</Typography>
+      {timeperiod==20 || timeperiod==30 ? <FormControl fullWidth sx={{ m: 1,minWidth:200  }} variant="standard">
+      <Typography id="demo" style={{ color: '#36454F' }}>Year</Typography>
       <div style={{height:'10px'}}></div>
         <Select
           labelId="demo-customized-select-label"
           id="demo-customized-select"
-          value={age1}
-          onChange={handleChange1}
+          value={year}
+          name='year'
+          onChange={handleChangeYear}
           input={<BootstrapInput />}
+          required
+        >
+          
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {names.map((item) => (
+  <MenuItem
+    key={item.value}
+    value={item.value}
+    style={getStyles(item.value, personName, theme)}
+  >
+    {item.name}
+  </MenuItem>
+))}
+
+        </Select>
+      </FormControl>:null}
+      {timeperiod==30?<FormControl fullWidth sx={{ m: 1,minWidth:200  }} variant="standard">
+      <Typography id="demo" style={{ color: '#36454F' }}>Month</Typography>
+      <div style={{height:'10px'}}></div>
+        <Select
+          labelId="demo-customized-select-label"
+          id="demo-customized-select"
+          value={month}
+          name='month'
+          onChange={handleChangeMonth}
+          input={<BootstrapInput />}
+          required
         >
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          <MenuItem value={10}>Yearly</MenuItem>
-          <MenuItem value={20}>Monthly</MenuItem>
-          <MenuItem value={30}>Weekly</MenuItem>
+          {names.map((item) => (
+  <MenuItem
+    key={item.value}
+    value={item.value}
+    style={getStyles(item.value, personName, theme)}
+  >
+    {item.name}
+  </MenuItem>
+))}
+
         </Select>
-      </FormControl>
+      </FormControl>:null}
+      
     </div>
   );
 }

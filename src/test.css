@@ -23,13 +23,13 @@
 }
 .pie {
     height: 40vh;
-    width: 40%;
-   
+    width: 48%;
+   min-height: 400px;
 }
 .data {
-    width: 60%;
+    width: 50%;
     height: 40vh;
-  
+    min-height: 400px;
 }
 .graph {
 width: 99%;
@@ -44,7 +44,7 @@ min-height: 700px;
     width: 20%;
 }
 
-@media (max-width: 750px) {
+@media (max-width: 850px) {
     .mixed-bar-position {
         width: 10%;
     }

@@ -18,6 +18,8 @@ import SendIcon from '@mui/icons-material/Send';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import { IconButton, Typography } from '@mui/material';
 import CustomizeForm from './Homepage/CustomizationDialogBox';
+import DateCalendarValue from './Homepage/Date';
+import DateCalendarFormProps from './Homepage/Date';
 
 
 
@@ -33,18 +35,27 @@ const data = [{'d':{'car':2882,'fn':874374,'fghdfn':874374},'di74787845dji':{'ca
   
 export default function BasicGrid() {
     const [open, setOpen] = React.useState(false);
-
+    const [test, setTest] = React.useState(false);
     const handleClickOpen = () => {
       setOpen(true);
     };
     const handleClose = () => {
         setOpen(false);
       };
+      React.useEffect(() => {
+        // Side effect logic goes here
+        console.log('Data changed:', data);
+      }, [test])
   return (
     <Box className='manifest-info2w'  sx={{ flexGrow: 1 }}>
       <Grid container style={{height:'100%'}} spacing={0.2}>
         <Grid item className='pie'>
-          <Item style={{height:'95%',width:''}} ></Item>
+          <Item style={{height:'95%',width:''}} >
+          <div style={{ marginLeft: '10px',display:'flex',flexDirection:'row' }}> 
+           <div style={{width:'10%'}}></div>
+            <DateCalendarFormProps/>
+            </div>
+          </Item>
         </Grid>
         <Grid item  className='data'>
           <Item  style={{height:'95%',width:''}} >
@@ -79,8 +90,12 @@ export default function BasicGrid() {
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
             const formJson = Object.fromEntries(formData.entries());
-            const email = formJson.email;
-            console.log(email);
+            const datas = formJson.data;
+            const times = formJson.time;
+            const years = formJson.year;
+            const months = formJson.month;
+            console.log(data);
+            setTest(datas+' '+times+' '+years+' '+months)
             handleClose();
           },
         }}
@@ -106,24 +121,29 @@ export default function BasicGrid() {
           <DialogContentText>
           
           </DialogContentText>
-          {/* <TextField
-            autoFocus
-            required
-            margin="dense"
-            id="name"
-            name="email"
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="standard"
-          />*/}
+      
          <CustomizeForm />
         </DialogContent>
         <DialogActions>
-         
-          <Button type="submit">Subscribe</Button>
+         <div  style={{
+     display: 'flex',
+     justifyContent: 'center', 
+     alignContent:'center',
+      marginRight: '35%',
+      
+   }}>
+     <Button sx={{ backgroundColor: '#F28C28', minWidth:'150px' ,
+      '&:hover': {
+        backgroundColor: '#FFA500', // Change this to the desired hover color
+      },}} 
+      variant="contained" type="submit">Submit</Button>
+   </div> 
+   <div style={{height:'70px'}}>
+  
+    </div>      
         </DialogActions>
       </Dialog>
+   
     </Box>
   );
 }
