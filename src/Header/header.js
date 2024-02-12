@@ -56,10 +56,7 @@ const Header = ({activeIndex}) => {
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
-  const handleMenuClick = (event) => {
-    event.stopPropagation(); // Prevent event propagation
-    toggleSidebar(); // Toggle sidebar
-  };
+ 
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -76,7 +73,8 @@ const Header = ({activeIndex}) => {
   }, []);
 
   return (
-    <div style={{ position: 'fixed', width: '100%', zIndex: 1000, top: 0 }}>
+    <div>
+    <div style={{ position: 'fixed', width: '100%', zIndex: 1001, top: 0 , overflow:'hidden'}}>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar style={{ background: 'black' }} className="appbar" position="static">
           <Toolbar>
@@ -119,13 +117,15 @@ const Header = ({activeIndex}) => {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <div className="app">
+       
+      </Box>
+    </div>
+    <div  className={`sidebar ${isOpen ? 'app' : 'app2'}`}>
           <div ref={sidebarRef} className={`sidebar ${isOpen ? 'open' : ''}`}>
             {/* Your sidebar content goes here */}
             <Sidebartask  activeIndex={activeIndex}/>
           </div>
         </div>
-      </Box>
     </div>
   )
 }

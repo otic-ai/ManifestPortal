@@ -1,0 +1,54 @@
+.manifest-info2 {
+    margin-left: 1px;
+     flex-grow: 1; /* Allow the div to grow to fill available space */
+     min-width: 200px;
+     max-width: 100vw;
+     display: flex; /* Use flexbox */
+     flex-direction: column; /* Stack children vertically */
+   }
+   
+.manifest-info2 > * {
+     flex-grow: 1; /* Make all children fill available vertical space */
+   }
+.items {
+    height: 100%;
+    width: 50%;
+}   
+.items-body {
+   height: 100%; 
+   
+}
+.items-width {
+    width:100vw
+}
+.pie {
+    height: 40vh;
+    width: 40%;
+   
+}
+.data {
+    width: 60%;
+    height: 40vh;
+  
+}
+.graph {
+width: 99%;
+height: 40vh;
+min-height: 700px;
+}
+.final {
+    height: 40vh;
+    width: 70%;
+}
+.mixed-bar-position {
+    width: 20%;
+}
+
+@media (max-width: 750px) {
+    .mixed-bar-position {
+        width: 10%;
+    }
+.pie , .data,.graph, .final{
+    width: 97.5vw;
+}
+}
