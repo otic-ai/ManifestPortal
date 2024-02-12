@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import './test.css';
-import TextField from '@mui/material/TextField';
+import CloseIcon from '@mui/icons-material/Close';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -16,8 +16,10 @@ import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
-import { IconButton } from '@mui/material';
-import FormDialog from './Homepage/CustomizationDialogBox';
+import { IconButton, Typography } from '@mui/material';
+import CustomizeForm from './Homepage/CustomizationDialogBox';
+
+
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'darks' ? '#1A2027' : '#fff',
@@ -46,8 +48,7 @@ export default function BasicGrid() {
         </Grid>
         <Grid item  className='data'>
           <Item  style={{height:'95%',width:''}} >
-           
-        <FormDialog value={open}/>
+     
           </Item>
         </Grid>
         <Grid item className='graph'>
@@ -71,6 +72,7 @@ export default function BasicGrid() {
       <Dialog
         open={open}
         onClose={handleClose}
+        maxWidth='sm'
         PaperProps={{
           component: 'form',
           onSubmit: (event) => {
@@ -83,13 +85,28 @@ export default function BasicGrid() {
           },
         }}
       >
-        <DialogTitle>Subscribe</DialogTitle>
+        <DialogTitle>
+          
+   <div style={{
+     display: 'flex',
+     justifyContent: 'center', // Horizontally center the content
+     marginTop: '15px',
+   }}>
+   <Typography sx={{ fontFamily: 'Serif' }} gutterBottom variant="h5" component="h2">
+                Customize Graph
+            </Typography>
+   </div>      
+          
+            <div style={{
+      borderBottom: '1px solid #B2BEB5', // Adjust the color, thickness, and style as needed
+      margin: '5px 0', // Optional: Adjust margin for spacing
+    }}></div>        
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To subscribe to this website, please enter your email address here. We
-            will send updates occasionally.
+          
           </DialogContentText>
-          <TextField
+          {/* <TextField
             autoFocus
             required
             margin="dense"
@@ -99,10 +116,11 @@ export default function BasicGrid() {
             type="email"
             fullWidth
             variant="standard"
-          />
+          />*/}
+         <CustomizeForm />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+         
           <Button type="submit">Subscribe</Button>
         </DialogActions>
       </Dialog>
