@@ -67,7 +67,8 @@ box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
  }
  .date-calendar{
-  min-width: 400px;
+  width: 100%;
+
  }
 @media (max-width: 850px) {
   .manifest-info {
@@ -75,7 +76,8 @@ box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     min-height: 92px;
 }
 .date-calendar{
-  min-width: 80vw;
+  min-width: 90vw;
+ 
  }
     .charts {
         width: 0%;

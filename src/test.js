@@ -20,6 +20,8 @@ import { IconButton, Typography } from '@mui/material';
 import CustomizeForm from './Homepage/CustomizationDialogBox';
 import DateCalendarValue from './Homepage/Date';
 import DateCalendarFormProps from './Homepage/Date';
+import Date1 from './Homepage/Date2';
+import MyCalendar from './Homepage/Date2';
 
 
 
@@ -52,8 +54,8 @@ export default function BasicGrid() {
         <Grid item className='pie'>
           <Item style={{height:'95%',width:''}} >
           <div style={{ marginLeft: '10px',display:'flex',flexDirection:'row' }}> 
-           <div style={{width:'3%'}}></div>
-            <DateCalendarFormProps/>
+           <div style={{width:'0%'}}></div>
+           <MyCalendar />
             </div>
           </Item>
         </Grid>
