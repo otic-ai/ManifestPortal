@@ -66,11 +66,17 @@ box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   right: 0;
   overflow: hidden;
  }
+ .date-calendar{
+  min-width: 400px;
+ }
 @media (max-width: 850px) {
   .manifest-info {
    
     min-height: 92px;
 }
+.date-calendar{
+  min-width: 80vw;
+ }
     .charts {
         width: 0%;
     }

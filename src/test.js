@@ -52,7 +52,7 @@ export default function BasicGrid() {
         <Grid item className='pie'>
           <Item style={{height:'95%',width:''}} >
           <div style={{ marginLeft: '10px',display:'flex',flexDirection:'row' }}> 
-           <div style={{width:'10%'}}></div>
+           <div style={{width:'3%'}}></div>
             <DateCalendarFormProps/>
             </div>
           </Item>

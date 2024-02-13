@@ -5,6 +5,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { color } from '@mui/system';
+import './home.css';
 
 export default function DateCalendarFormProps() {
   const handleDateChange = (date) => {
@@ -16,13 +17,15 @@ export default function DateCalendarFormProps() {
     }
     
   };
-
+const selectedDates =[dayjs('2022-04-17'),dayjs('2022-05-17')]
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer components={['DateCalendar', 'DateCalendar']}>
-        <DemoItem label="Events">
+        <DemoItem label="Upcoming Events">
           <DateCalendar
+          className='date-calendar'
             sx={{
+              
               '& .MuiPickersDay-root': {
                 backgroundColor: 'white',
                 '&.Mui-selected': {
@@ -33,7 +36,7 @@ export default function DateCalendarFormProps() {
                 },
               },
             }}
-           
+      
             value={dayjs('2022-04-17')}
             
             onChange={handleDateChange} // Call handleDateChange when a date is selected
