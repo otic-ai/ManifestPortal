@@ -5,7 +5,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import './home.css';
 
 const localizer = momentLocalizer(moment)
-
+const eventDate = new Date(2024, 2, 18);
 const events = [
   {
     title: 'Event 1',
@@ -14,10 +14,10 @@ const events = [
     title: 'Event 1',
   },
   {
-    title: 'Event 2',
-    start: new Date(new Date().setDate(new Date().getDate() + 1)),
-    end: new Date(new Date().setHours(new Date().getHours() + 1)),
-  }
+  title: 'Event 2',
+  start: eventDate,
+  end: new Date(eventDate.getTime() + 60 * 60 * 1000), // Adding 1 hour to the start time
+}
 ];
 
 const MyCalendar = ({height}) => {

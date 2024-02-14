@@ -5,7 +5,6 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import './home.css';
 import Header from '../Header/header';
-import BasicGrid from '../test';
 import MyChartComponent from './Barchart';
 import { Button, IconButton, Typography } from '@mui/material';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
@@ -52,7 +51,7 @@ const handleFirstComponentRef = (el) => {
     const hh = 92/100 * el.offsetHeight
     setHeight(hh);
   } else {
-    setHeight(350)
+    setHeight(400)
   }
 };
 const handleFirstComponentRefSecondGrid = (el) => {
@@ -104,7 +103,7 @@ const handleFirstComponentRefSecondGrid = (el) => {
         <div style={{display:'flex',flexDirection:'row',height:'90%'}}>
                 <div className='mixed-bar-position'></div>
                
-                <MyChartComponent data={data} />
+                <MyChartComponent data={data} charttype={'pie'}/>
             {/*    <ManifestActivity data={yourData} /> */}
             </div>
           </Item>

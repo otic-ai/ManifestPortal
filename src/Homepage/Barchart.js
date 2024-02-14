@@ -2,11 +2,15 @@ import React, { useEffect } from 'react';
 import * as echarts from 'echarts';
 import MyComponent from './modetest';
 
-const MyChartComponent = ({data}) => {
+const MyChartComponent = ({data, charttype}) => {
   useEffect(() => {
     const chartDom = document.getElementById('main');
     const myChart = echarts.init(chartDom);
-    
+    const style = ()=>{
+      if (charttype != 'pie'){
+       
+      }
+    }
 const dataset =  MyComponent("Your Title Here",data )
     const dataMap = {};
     function dataFormatter(obj) {
@@ -87,8 +91,13 @@ const dataset =  MyComponent("Your Title Here",data )
           }
         ],
         series: [
-          { name: 'Total', type: 'bar',color:'orange' }
+          { 
+            name: 'Total', 
+            type: charttype, 
+            color: charttype == 'pie' ? undefined : {  orange: 'orange'} // Use undefined to remove the color attribute when charttype is not 'pie'
+          }
         ]
+        
       },
       options: [
         

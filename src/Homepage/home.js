@@ -1,35 +1,15 @@
 import React from 'react'
-import Header from '../Header/header'
-import Sidebartask from '../Sidebar/sidebar'
 import './home.css';
 import { useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import SkipNextIcon from '@mui/icons-material/SkipNext';
-import Button from '@mui/material/Button';
-import CardActions from '@mui/material/CardActions';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
 import { CardActionArea } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import PercentageIndicator from '../TargetProgress/progress';
-import Manifestactivity from '../ManifestActivity/manifestactivity';
-import ManifestActivity from '../ManifestActivity/manifestactivity';
-import BasicGrid from '../test';
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
+
 const Home = () => {
   const theme = useTheme();
   const items = [
@@ -43,10 +23,7 @@ const Home = () => {
  
   const targets = [
     { name: 'Souls Won',target: '939', current: '200' },
-    { name: 'Livestream Attendance',target: '200', current: '104' },
-    { name: 'Transportation Attendance',target: '200', current: '14' },
-    { name: 'Fellowship Attendance',target: '700', current: '204' },
-  
+   
     // ... more items
   ];
 
