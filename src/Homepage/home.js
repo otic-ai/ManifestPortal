@@ -58,99 +58,73 @@ const Home = () => {
   ];
 
   return (
-    <div className='home' >
-         <Header activeIndex={0} />
-     <div >
-      <div className='top-header'>
-      <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={0.3}>
-        <Grid item >
-          <Item  className='manifest-info'>
-
-          <Card >
-      <CardActionArea >
-      
-      <Typography>
-        <div style={{display:'flex',flexDirection:'row'}}>
-          <div style={{width:'40%', color:'white'}}>ghghgh</div>
-        <Avatar sx={{ width: 66, height: 66 }} alt="Profile" src="download.png" />
-        </div>
-       
-        </Typography>
-        <CardContent >
-          <Typography sx={{ fontFamily: 'Serif' }} gutterBottom variant="h4" component="div">
-            Manifest Kyenjojo
-          </Typography>
-      <div>
-   {items.map((item) => (
-     <div style={{ display: 'flex', flexDirection: 'row' }}>
-   
-      <Typography sx={{width:'100px', textAlign:'right'}} variant="body2" color="text.secondary">
-        {item.attribute}:
-      </Typography>
-      <div style={{ width: '10px' }}></div>
-      <Typography variant="body2" color="text.secondary">
-        {item.value}
-      </Typography>
-    </div>
- 
-  ))}      
-        </div> 
-        {targets.map((item) => (
-     <div >
-   <Typography sx={{ fontFamily: 'Serif' }} gutterBottom variant="h6" component="div">
-          {item.name} 
-          </Typography>
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
-   
-      <Typography sx={{width:'100px', textAlign:'right'}} variant="body2" color="text.secondary">
-        Target:
-      </Typography>
-      <div style={{ width: '10px' }}></div>
-      <Typography variant="body2" color="text.secondary">
-        {item.target}
-      </Typography>
-      
-    </div>
-    <div style={{ display: 'flex', flexDirection: 'row' }}>
-   
-   <Typography sx={{width:'100px', textAlign:'right'}} variant="body2" color="text.secondary">
-     Current:
-   </Typography>
-   <div style={{ width: '10px' }}></div>
-   <Typography variant="body2" color="text.secondary">
-     {item.current}
-   </Typography>
-   
- </div>
- <div style={{height:'10px'}} ></div>
-        <PercentageIndicator target={item.target} current={item.current}/> 
-      
-    </div>
- 
-  ))}
-           
-        </CardContent>
-      </CardActionArea>
-      
-    </Card>
-          </Item>
-        </Grid>
-        <Grid  item xs>
-          <item xs>
-          <BasicGrid />
-          </item>
-        </Grid>
-       
-      </Grid>
-     
-    </Box>
+    <Card >
+    <CardActionArea >
+    
+    <Typography>
+      <div style={{display:'flex',flexDirection:'row'}}>
+        <div style={{width:'40%', color:'white'}}>ghghgh</div>
+      <Avatar sx={{ width: 66, height: 66 }} alt="Profile" src="download.png" />
       </div>
+     
+      </Typography>
+      <CardContent >
+        <Typography sx={{ fontFamily: 'Serif' }} gutterBottom variant="h4" component="div">
+          Manifest Kyenjojo
+        </Typography>
+    <div>
+ {items.map((item) => (
+   <div style={{ display: 'flex', flexDirection: 'row' }}>
+ 
+    <Typography sx={{width:'100px', textAlign:'right'}} variant="body2" color="text.secondary">
+      {item.attribute}:
+    </Typography>
+    <div style={{ width: '10px' }}></div>
+    <Typography variant="body2" color="text.secondary">
+      {item.value}
+    </Typography>
+  </div>
+
+))}      
+      </div> 
+      {targets.map((item) => (
+   <div >
+ <Typography sx={{ fontFamily: 'Serif' }} gutterBottom variant="h6" component="div">
+        {item.name} 
+        </Typography>
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+ 
+    <Typography sx={{width:'100px', textAlign:'right'}} variant="body2" color="text.secondary">
+      Target:
+    </Typography>
+    <div style={{ width: '10px' }}></div>
+    <Typography variant="body2" color="text.secondary">
+      {item.target}
+    </Typography>
     
+  </div>
+  <div style={{ display: 'flex', flexDirection: 'row' }}>
+ 
+ <Typography sx={{width:'100px', textAlign:'right'}} variant="body2" color="text.secondary">
+   Current:
+ </Typography>
+ <div style={{ width: '10px' }}></div>
+ <Typography variant="body2" color="text.secondary">
+   {item.current}
+ </Typography>
+ 
+</div>
+<div style={{height:'10px'}} ></div>
+      <PercentageIndicator target={item.target} current={item.current}/> 
     
-     </div>
+  </div>
+
+))}
+         
+      </CardContent>
+    </CardActionArea>
     
-    </div>
+  </Card>
    
   )
 }

@@ -1,7 +1,7 @@
 .home {
     
     width: 100vw;
-   background-color: rgb(219, 214, 214); 
+   background-color: whitesmoke; 
    margin-top: 0px;
 }
 .app {
@@ -70,7 +70,23 @@ box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 100%;
 
  }
-@media (max-width: 850px) {
+
+ .grid1 {
+  width: 30vw;
+ }
+ .grid2 {
+  width: 68vw;
+ }
+ .grid3 {
+  width: 40vw;
+ }
+ .grid4 {
+  width: 58vw;
+ }
+@media (max-width: 790px) {
+  .grid1, .grid2, .grid3, .grid4 {
+    width: 100vw;
+   }
   .manifest-info {
    
     min-height: 92px;

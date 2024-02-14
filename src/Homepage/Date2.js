@@ -55,7 +55,7 @@ const MyCalendar = () => {
        endAccessor="end"
        onSelectEvent={handleDateChange}
        className='date-calendar'
-       style={{height:350,}}
+       style={{height:450,}}
       />
     </div>
   );

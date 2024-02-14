@@ -3,40 +3,32 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import './test.css';
-import CloseIcon from '@mui/icons-material/Close';
+import './home.css';
+import Header from '../Header/header';
+import BasicGrid from '../test';
+import MyChartComponent from './Barchart';
+import { Button, IconButton, Typography } from '@mui/material';
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import MyChartComponent from './Homepage/Barchart';
-import MyComponent from './Homepage/modetest';
-import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
-import SendIcon from '@mui/icons-material/Send';
-import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
-import { IconButton, Typography } from '@mui/material';
-import CustomizeForm from './Homepage/CustomizationDialogBox';
-import DateCalendarValue from './Homepage/Date';
-import DateCalendarFormProps from './Homepage/Date';
-import Date1 from './Homepage/Date2';
-import MyCalendar from './Homepage/Date2';
-import DataTable from './Homepage/Table';
-
+import CustomizeForm from './CustomizationDialogBox';
+import Enhancedtable from './Table';
+import MyCalendar from './Date2';
+import Home from './home';
 
 
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'darks' ? '#1A2027' : '#fff',
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: 'center',
   color: theme.palette.text.secondary,
 }));
-const data = [{'d':{'car':2882,'fn':874374,'fghdfn':874374},'di74787845dji':{'car':2882,'fn':874374,'fghdfn':874374},'didyweyyji':{'car':2882,'fn':874374,'fghdfn':874374},'didji':{'car':2882,'fn':874374,'fghdfn':874374},'dididfdhhji':{'car':2882,'fn7':87884,'f':8744},'dididi':{'car':2882,'fn7':874,},'sdjhsdjh':{'car':2882,'fn':874374}}];
-  
-  
-export default function BasicGrid() {
+
+export default function HomeGrid() {
     const [open, setOpen] = React.useState(false);
     const [test, setTest] = React.useState(false);
     const handleClickOpen = () => {
@@ -49,25 +41,47 @@ export default function BasicGrid() {
         // Side effect logic goes here
         console.log('Data changed:', data);
       }, [test])
+    const items = [
+        { attribute: 'Team Leader', value: 'Mugumbya Benon' },
+        { attribute: 'Start Date', value: '2024-02-01' },
+        { attribute: 'Contact', value: '+256703882021' },
+        { attribute: 'Email', value: 'legacyallan0@gmail.com' },
+        { attribute: 'Region', value: 'Central' },
+        // ... more items
+      ];
+      const yourData = [
+        ['product', '2012', '2013', '2014', '2015', '2016', '2017'],
+        ['Milk Tea', 56.5, 82.1, 88.7, 70.1, 53.4, 85.1],
+        ['Matcha Latte', 51.1, 51.4, 55.1, 53.3, 73.8, 68.7],
+        ['Cheese Cocoa', 40.1, 62.2, 69.5, 36.4, 45.2, 32.5],
+        ['Walnut Brownie', 25.2, 37.1, 41.2, 18, 33.9, 49.1]
+      ];
+      
+      const targets = [
+        { name: 'Souls Won',target: '939', current: '200' },
+        { name: 'Livestream Attendance',target: '200', current: '104' },
+        { name: 'Transportation Attendance',target: '200', current: '14' },
+        { name: 'Fellowship Attendance',target: '700', current: '204' },
+        { name: 'Outreach ',target: '600', current: '204' },
+        // ... more items
+      ];
+
+      const data = [{'d':{'car':2882,'fn':874374,'fghdfn':874374},'di74787845dji':{'car':2882,'fn':874374,'fghdfn':874374},'didyweyyji':{'car':2882,'fn':874374,'fghdfn':874374},'didji':{'car':2882,'fn':874374,'fghdfn':874374},'dididfdhhji':{'car':2882,'fn7':87884,'f':8744},'dididi':{'car':2882,'fn7':874,},'sdjhsdjh':{'car':2882,'fn':874374}}];
+  
   return (
-    <Box className='manifest-info2w'  sx={{ flexGrow: 1 }}>
-      <Grid container style={{height:'100%'}} spacing={0.2}>
-        <Grid item className='pie'>
-          <Item style={{height:'95%',width:''}} >
-          <div style={{ marginLeft: '10px',display:'flex',flexDirection:'row' }}> 
-           <div style={{width:'0%'}}></div>
-           <MyCalendar />
-            </div>
+    <div className='home' >
+          <Header activeIndex={0} />
+          <div className='top-header'>
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid container spacing={2}>
+        <Grid className='grid1' item >
+          <Item>
+            <Home />
           </Item>
         </Grid>
-        <Grid item  className='data'>
-          <Item  style={{height:'95%',width:''}} >
-     <DataTable />
-          </Item>
-        </Grid>
-        <Grid item className='graph'>
-        <Item  style={{height:'95%',width:''}} >
-        <div style={{ marginLeft: '10px',width:'20%',display:'flex',flexDirection:'row' }}> {/* Apply inline style to adjust the margin */}
+        <Grid className='grid2' item >
+          <Item>
+          <div style={{ marginLeft: '10px',width:'20%',display:'flex',flexDirection:'row' }}> {/* Apply inline style to adjust the margin */}
         <IconButton onClick={handleClickOpen} aria-label="delete" size="large">
   <PlaylistAddIcon fontSize="inherit" />
 </IconButton>
@@ -81,7 +95,16 @@ export default function BasicGrid() {
             </div>
           </Item>
         </Grid>
-        
+        <Grid item className='grid3'>
+          <Item>
+          <MyCalendar />
+          </Item>
+        </Grid>
+        <Grid item className='grid4'>
+          <Item>
+          <Enhancedtable />
+          </Item>
+        </Grid>
       </Grid>
       <Dialog
         open={open}
@@ -146,7 +169,8 @@ export default function BasicGrid() {
     </div>      
         </DialogActions>
       </Dialog>
-   
     </Box>
+    </div>
+    </div>
   );
 }
