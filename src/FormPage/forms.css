@@ -1,0 +1,26 @@
+.top-header {
+    margin-top: 65px;
+margin-left: 4px;
+
+}
+
+/* styles.css */
+.custom-header {
+    font-family: Arial, sans-serif; /* Change font family */
+    font-size: 16px; /* Change font size */
+    font-weight: bold; /* Change font weight */
+    color: black; /* Change font color */
+    outline: "none !important",
+   
+  }
+.custom-header:focus-within, .custom-header:focus {
+   outline: 2px solid #FFA500;
+   border: 2px solid #FFA500;
+   outline: "none !important",
+}
+/* styles.css */
+.selected-row {
+    border: 2px solid #FFA500; /* Change border color */
+  }
+  
+  
