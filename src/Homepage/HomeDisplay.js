@@ -31,6 +31,38 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function HomeGrid() {
     const [open, setOpen] = React.useState(false);
     const [test, setTest] = React.useState(false);
+    const [height, setHeight] = React.useState(0);
+    const [height2, setHeight2] = React.useState(0);
+    const [screenwidth, setScreenwidth] = React.useState(0);
+
+    React.useEffect(() => {
+        const handleResize = () => {
+          setScreenwidth(window.innerWidth);
+
+        };
+    handleFirstComponentRef();
+    handleFirstComponentRefSecondGrid();
+        window.addEventListener('resize', handleResize);
+    
+        return () => window.removeEventListener('resize', handleResize);
+      }, []);
+      
+const handleFirstComponentRef = (el) => {
+  if (el && screenwidth >= 790) {
+    const hh = 92/100 * el.offsetHeight
+    setHeight(hh);
+  } else {
+    setHeight(350)
+  }
+};
+const handleFirstComponentRefSecondGrid = (el) => {
+    if (el && screenwidth >= 790) {
+      const hh = 77/100 * el.offsetHeight
+      setHeight2(hh);
+    } else {
+        setHeight2(350)
+    }
+  };
     const handleClickOpen = () => {
       setOpen(true);
     };
@@ -41,31 +73,8 @@ export default function HomeGrid() {
         // Side effect logic goes here
         console.log('Data changed:', data);
       }, [test])
-    const items = [
-        { attribute: 'Team Leader', value: 'Mugumbya Benon' },
-        { attribute: 'Start Date', value: '2024-02-01' },
-        { attribute: 'Contact', value: '+256703882021' },
-        { attribute: 'Email', value: 'legacyallan0@gmail.com' },
-        { attribute: 'Region', value: 'Central' },
-        // ... more items
-      ];
-      const yourData = [
-        ['product', '2012', '2013', '2014', '2015', '2016', '2017'],
-        ['Milk Tea', 56.5, 82.1, 88.7, 70.1, 53.4, 85.1],
-        ['Matcha Latte', 51.1, 51.4, 55.1, 53.3, 73.8, 68.7],
-        ['Cheese Cocoa', 40.1, 62.2, 69.5, 36.4, 45.2, 32.5],
-        ['Walnut Brownie', 25.2, 37.1, 41.2, 18, 33.9, 49.1]
-      ];
-      
-      const targets = [
-        { name: 'Souls Won',target: '939', current: '200' },
-        { name: 'Livestream Attendance',target: '200', current: '104' },
-        { name: 'Transportation Attendance',target: '200', current: '14' },
-        { name: 'Fellowship Attendance',target: '700', current: '204' },
-        { name: 'Outreach ',target: '600', current: '204' },
-        // ... more items
-      ];
-
+  
+    
       const data = [{'d':{'car':2882,'fn':874374,'fghdfn':874374},'di74787845dji':{'car':2882,'fn':874374,'fghdfn':874374},'didyweyyji':{'car':2882,'fn':874374,'fghdfn':874374},'didji':{'car':2882,'fn':874374,'fghdfn':874374},'dididfdhhji':{'car':2882,'fn7':87884,'f':8744},'dididi':{'car':2882,'fn7':874,},'sdjhsdjh':{'car':2882,'fn':874374}}];
   
   return (
@@ -74,12 +83,17 @@ export default function HomeGrid() {
           <div className='top-header'>
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
-        <Grid className='grid1' item >
+        <Grid ref={handleFirstComponentRef} className='grid1' item >
           <Item>
             <Home />
           </Item>
         </Grid>
-        <Grid className='grid2' item >
+        <Grid  className='grid2' item >
+          <Item >
+         <MyCalendar height={height}/>
+          </Item>
+        </Grid>
+        <Grid ref={handleFirstComponentRefSecondGrid} item className='grid3'>
           <Item>
           <div style={{ marginLeft: '10px',width:'20%',display:'flex',flexDirection:'row' }}> {/* Apply inline style to adjust the margin */}
         <IconButton onClick={handleClickOpen} aria-label="delete" size="large">
@@ -95,14 +109,9 @@ export default function HomeGrid() {
             </div>
           </Item>
         </Grid>
-        <Grid item className='grid3'>
-          <Item>
-          <MyCalendar />
-          </Item>
-        </Grid>
         <Grid item className='grid4'>
           <Item>
-          <Enhancedtable />
+          <Enhancedtable height={height2} />
           </Item>
         </Grid>
       </Grid>

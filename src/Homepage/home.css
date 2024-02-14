@@ -72,16 +72,16 @@ box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
  }
 
  .grid1 {
-  width: 30vw;
+  width: 50vw;
  }
  .grid2 {
-  width: 68vw;
+  width: 48vw;
  }
  .grid3 {
-  width: 40vw;
+  width: 60vw;
  }
  .grid4 {
-  width: 58vw;
+  width: 38vw;
  }
 @media (max-width: 790px) {
   .grid1, .grid2, .grid3, .grid4 {

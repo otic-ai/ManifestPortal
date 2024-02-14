@@ -20,7 +20,7 @@ const events = [
   }
 ];
 
-const MyCalendar = () => {
+const MyCalendar = ({height}) => {
     const handleDateChange = (date) => {
         // Format the selected date
       
@@ -55,7 +55,7 @@ const MyCalendar = () => {
        endAccessor="end"
        onSelectEvent={handleDateChange}
        className='date-calendar'
-       style={{height:450,}}
+       style={{height:height,}}
       />
     </div>
   );

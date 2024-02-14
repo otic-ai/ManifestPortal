@@ -40,20 +40,13 @@ const Home = () => {
     { attribute: 'Region', value: 'Central' },
     // ... more items
   ];
-  const yourData = [
-    ['product', '2012', '2013', '2014', '2015', '2016', '2017'],
-    ['Milk Tea', 56.5, 82.1, 88.7, 70.1, 53.4, 85.1],
-    ['Matcha Latte', 51.1, 51.4, 55.1, 53.3, 73.8, 68.7],
-    ['Cheese Cocoa', 40.1, 62.2, 69.5, 36.4, 45.2, 32.5],
-    ['Walnut Brownie', 25.2, 37.1, 41.2, 18, 33.9, 49.1]
-  ];
-  
+ 
   const targets = [
     { name: 'Souls Won',target: '939', current: '200' },
     { name: 'Livestream Attendance',target: '200', current: '104' },
     { name: 'Transportation Attendance',target: '200', current: '14' },
     { name: 'Fellowship Attendance',target: '700', current: '204' },
-    { name: 'Outreach ',target: '600', current: '204' },
+  
     // ... more items
   ];
 
