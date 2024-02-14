@@ -94,7 +94,7 @@ const dataset =  MyComponent("Your Title Here",data )
           { 
             name: 'Total', 
             type: charttype, 
-            color: charttype == 'pie' ? undefined : {  orange: 'orange'} // Use undefined to remove the color attribute when charttype is not 'pie'
+            color: charttype == 'pie' ? undefined : 'orange' // Use undefined to remove the color attribute when charttype is not 'pie'
           }
         ]
         

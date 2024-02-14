@@ -73,11 +73,15 @@ export default function CustomizeForm() {
   const [timeperiod, setTimeperiod] = React.useState('');
   const [year, setYear] = React.useState('');
   const [month, setMonth] = React.useState('');
+  const [charttype, SetCharttype] = React.useState('');
   const handletimeperiod = (event) => {
     setTimeperiod(event.target.value);
   };
   const handleChangeYear = (event) => {
     setYear(event.target.value);
+  };
+  const handleChangeCharttype = (event) => {
+    SetCharttype(event.target.value);
   };
   const handleChangeMonth = (event) => {
     setMonth(event.target.value);
@@ -121,6 +125,34 @@ export default function CustomizeForm() {
   </MenuItem>
 ))}
 
+        </Select>
+      </FormControl>
+      <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+      
+      <Typography id="demo" style={{ color: '#36454F',minWidth:'200px' }}>Chart Type</Typography>
+      <div style={{height:'10px'}}></div>
+        <Select
+         labelId="demo"
+         name='charttype'
+         required
+          value={charttype}
+          onChange={handleChangeCharttype}
+        
+          MenuProps={MenuProps}
+          input={<BootstrapInput />}
+        >
+  <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value="line">
+           Line
+          </MenuItem>
+          <MenuItem value="bar">
+           Bar 
+          </MenuItem>
+          <MenuItem value="pie">
+           Pie
+          </MenuItem>
         </Select>
       </FormControl>
       <FormControl fullWidth sx={{ m: 1,minWidth:200  }} variant="standard">

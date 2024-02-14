@@ -128,6 +128,7 @@ const handleFirstComponentRefSecondGrid = (el) => {
             const times = formJson.time;
             const years = formJson.year;
             const months = formJson.month;
+            const charttype = formJson.charttype
             console.log(data);
             setTest(datas+' '+times+' '+years+' '+months)
             handleClose();

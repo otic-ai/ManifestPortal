@@ -1,7 +1,7 @@
 .home {
     
     width: 100vw;
-   background-color: whitesmoke; 
+   background-color: rgb(219, 218, 218); 
    margin-top: 0px;
 }
 .app {
@@ -78,10 +78,10 @@ box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 58vw;
  }
  .grid3 {
-  width: 60vw;
+  width: 50vw;
  }
  .grid4 {
-  width: 38vw;
+  width: 48vw;
  }
 @media (max-width: 790px) {
   .grid1, .grid2, .grid3, .grid4 {
