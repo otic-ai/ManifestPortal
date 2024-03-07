@@ -26,8 +26,7 @@ const Sidebartask = ({activeIndex }) => {
   page:'/'},
   {tagName: 'Forms',  tag: <EditNoteIcon className='icon'/>,
   page:'/forms'},
-  {tagName: 'Data',  tag: <StorageIcon className='icon'/>,
-  page:'/'},
+ 
   {tagName: 'Admin',  tag: <AdminPanelSettings className='icon'/>,
   page:'/'},
    

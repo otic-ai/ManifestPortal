@@ -103,7 +103,7 @@ const handleFirstComponentRefSecondGrid = (el) => {
         <div style={{display:'flex',flexDirection:'row',height:'90%'}}>
                 <div className='mixed-bar-position'></div>
                
-                <MyChartComponent data={data} charttype={'pie'}/>
+                <MyChartComponent data={data} charttype={'bar'}/>
             {/*    <ManifestActivity data={yourData} /> */}
             </div>
           </Item>

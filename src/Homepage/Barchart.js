@@ -11,7 +11,7 @@ const MyChartComponent = ({data, charttype}) => {
        
       }
     }
-const dataset =  MyComponent("Your Title Here",data )
+const dataset =  MyComponent("",data )
     const dataMap = {};
     function dataFormatter(obj) {
         console.log('Input object:', obj);

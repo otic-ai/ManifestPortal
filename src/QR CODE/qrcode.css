@@ -1,0 +1,37 @@
+.top-header {
+    margin-top: 85px;
+margin-left: 4px;
+display: flex;
+justify-content: center;
+align-items: center
+}
+.copy-link {
+    margin-top: 29px;
+    display: flex;
+    position: absolute; /* Make it positioned relative to the viewport */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+justify-content: center;
+align-items: center ;
+max-width: 80vw;
+min-width: 350px;
+background-color: rgba(245, 244, 244, 0.904);  /* Set the background color to grey */
+border: 0.5px solid rgb(221, 218, 218); /* Add a black border (adjust thickness as needed) */
+border-radius: 10px;     /* Create rounded corners (adjust radius for more/less rounding) */
+padding: 15px; 
+}
+.links {
+    flex: 1; /* Make it occupy remaining space */
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow: wrap;
+    font-weight: bold;;
+}
+.button {
+    flex: 0 0 auto; /* Set width to fit content and don't grow */
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow: wrap;
+    right: 0; 
+}
