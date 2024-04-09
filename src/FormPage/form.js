@@ -142,7 +142,9 @@ function formatColumnName(name) {
                <GridActionsCellItem
                  icon={<DesignServicesIcon />}
                  label="Form Design"
-              //   onClick={duplicateUser(params.id)}
+                 onClick={()=>{
+                  url(`/formview/${getFormIdById(params.id)}`)
+                }}
                  showInMenu
                />,
 

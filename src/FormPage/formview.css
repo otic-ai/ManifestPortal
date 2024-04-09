@@ -5,12 +5,12 @@ margin-left: 4px;
 }
 
 .form {
-    margin-left: 40%;
+    margin-left: 10%;
     justify-content: center;
     align-items: center ;
 }
 @media (max-width: 750px) {
     .form {
-        margin-left: 3%;}  
+        margin-left: 6%;}  
 }
 
