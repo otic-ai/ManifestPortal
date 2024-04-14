@@ -13,7 +13,7 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormHelperText from '@mui/material/FormHelperText';
-import { Button, IconButton, Typography } from '@mui/material';
+import { Button, FormLabel, IconButton, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Dialog from '@mui/material/Dialog';
@@ -22,6 +22,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { jsx } from '@emotion/react';
+import EditIcon from '@mui/icons-material/Edit';
+import MultiTextFields from './MultiForm';
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -32,9 +34,26 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 const FormView = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [selectedFormField, setSelectedFormField] = useState(null);
+  const [formdesign, setFormdesign] = useState([
+    {
+      fieldname: 'Name',
+      required: true,
+      value: null,
+      id: 'fname',
+      dropdown: true,
+      inputtype: 'text',
+      category: ['sdhh', 'benon','jjdsjksdjk','hsdjhsdjh'],
+    },
+  ]);
 
-  const handleClickOpenDialog = () => {
+  const [categories, setCategories] = useState(formdesign);
+
+ 
+  const handleNewField = () => {
+  setSelectedFormField(null);
     setOpen(true);
   };
 
@@ -42,45 +61,39 @@ const FormView = () => {
     setOpen(false);
   };
 
-    let { formid } = useParams();
-    const [formdesign, setFormdesign]= useState([{'fieldname':'Name','required':true,'value':null,
-    'id':'fname','dropdown':true,'inputtype':'text','category':['sdhh','sdsdjhsd','sdsdjh']},
-    {'fieldname':'lirst Name','required':false,'value':null,
-    'id':'lname','dropdown':false,'inputtype':'url','category':['sdhh','sdsdjhsd','sdsdjh']},
-    ])
-    const [categories, setCategories] = React.useState(formdesign);
-
-  const handleChange = async (event,index) => {
-    const updatedCategories = [...categories]; // Create a copy to avoid mutation
+  const handleChange = (event, index) => {
+    const updatedCategories = [...categories];
     updatedCategories[index].value = event.target.value;
     setCategories(updatedCategories);
-   
   };
+
   const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent default form submission behavior
-  
-    // Get the values from the categories state
+    event.preventDefault();
     const formValues = categories.map((item) => ({
-        value: item.value,
-        id: item.id, // Add form ID to the object
-      }));
-  
-    // Do something with the formValues, e.g., send them to a server
-    alert(JSON.stringify(formValues)); // For demonstration, log the values to the console
+      value: item.value,
+      id: item.id,
+    }));
+    alert(JSON.stringify(formValues));
   };
-  const handleDeleteField = (index) => {
-    return () => {
-      const shouldDelete = window.confirm('Are you sure you want to delete this field?');
-      // Create a copy of the current formdesign array
-      if (shouldDelete) {
-      const updatedFormDesign = [...formdesign];
-      // Remove the item at the specified index
-      updatedFormDesign.splice(index, 1);
-      // Update the state with the modified array
-      setFormdesign(updatedFormDesign);}
-    };
-  };
+
+
+const handleDeleteField = () => {
+  const shouldDelete = window.confirm('Are you sure you want to delete this field?');
   
+  if (shouldDelete && selectedFormField !== null && selectedFormField >= 0) {
+    const updatedFormDesign = [...formdesign];
+    updatedFormDesign.splice(selectedFormField, 1);
+    setFormdesign(updatedFormDesign);
+    setOpen(false);
+    setSelectedFormField(null); // Reset selectedFormField after deletion
+  }
+};
+
+
+ 
+
+ 
+
   
   return (
     <div >
@@ -97,8 +110,11 @@ const FormView = () => {
     {formdesign.map((value,index) =>(
         
       <div style={{display:'flex', flexDirection:'row'}}>
-      <IconButton  onClick={handleDeleteField(index)} aria-label="delete">
-  <DeleteIcon />
+      <IconButton  onClick={() => {
+  setSelectedFormField(index);
+    setOpen(true);
+  }} aria-label="delete">
+  <EditIcon />
 </IconButton>
         <div style={{width:'10px', color:'white'}}>cx</div> <div>
         
@@ -141,8 +157,8 @@ const FormView = () => {
        </div>
     ))}
          
-         <IconButton onClick={handleClickOpenDialog} aria-label="delete">
-  <AddCircleIcon /> Add New Field
+         <IconButton onClick={handleNewField} aria-label="delete">
+  <AddCircleIcon /> Add 
 </IconButton>  
     </FormControl>
     <Button sx={{ marginLeft:'50%',backgroundColor: '#F28C28', minWidth:'150px' ,
@@ -158,15 +174,38 @@ const FormView = () => {
          <Dialog
         open={open}
         onClose={handleCloseDialog}
+        style={{minWidth:'550px'}}
         PaperProps={{
           component: 'form',
           onSubmit: (event) => {
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
             const formJson = Object.fromEntries(formData.entries());
-           // const email = formJson.email;
-            alert(JSON.stringify(formData))
-            handleCloseDialog();
+            const keys = Object.keys(formJson);
+           
+            const isFieldNameUnique = formdesign.every((field) => field.fieldname !== formJson['name']);
+          if (!isFieldNameUnique && selectedFormField==null){
+            alert('Field name already exists. Please choose a different name.')
+            return;
+          }
+    const newDesign = {'fieldname':formJson['name'],'id':formJson['name'],
+    'required':formJson['required'] =='true'? true : false,'value':null,'inputtype':formJson['type'],
+    'dropdown':formJson['type']=='category' ? true : false,'unique':formJson['unique']}
+    const categoryList = []
+    keys.forEach((item) => {
+      if (item.startsWith('Category-option')) {
+        // Push the new item to categoryList
+        categoryList.push(formJson[item]);
+      }
+    });
+    
+            const finalDesign = {...newDesign,'category':categoryList}  
+            if (selectedFormField==null){
+              formdesign.push(finalDesign)
+            }else{
+              formdesign[selectedFormField] = finalDesign
+            }  
+         handleCloseDialog();
           },
         }}
       >
@@ -176,7 +215,7 @@ const FormView = () => {
            Fill in the form below to add new field
            <div style={{height:'20px'}}></div>
           </DialogContentText>
-          <FormControl  fullWidth  sx={{maxWidth: '600px' , width:'80vw'}} variant="standard"> 
+          <FormControl    sx={{maxWidth: '600px' , width:'400px'}} variant="standard"> 
           <TextField
         required={true}
         style={{ 
@@ -186,21 +225,30 @@ const FormView = () => {
         // onChange={(event) => handleChange(event, index)}
        //  value={categories[index].value}
          id='name'
+         name='name'
          label="Field Name"
+         defaultValue={selectedFormField !=null? `${formdesign[selectedFormField].fieldname }`:''}
         // defaultValue="Hello World"
     //     helperText="Incorrect entry."
-         sx={{maxWidth: '600px' , width:'80vw'}}
+         sx={{maxWidth: '600px' , width:'400px'}}
        />
           </FormControl>
           <div style={{height:'20px'}}></div>
-          <FormControl sx={{maxWidth: '600px' , width:'80vw'}}>
-       <InputLabel  required={true}  id='type'>Field Type</InputLabel>
+          <FormControl sx={{maxWidth: '600px' , width:'400px'}}>
+       <InputLabel name='type'  required={true}  id='type'>Field Type</InputLabel>
        <Select
          labelId='type'
          id='type'
-        // value={categories[index].value}
+         name='type'
+         defaultValue={selectedFormField !=null? `${formdesign[selectedFormField].inputtype }`:''}
          label='Field Type'
-      //   onChange={(event) => handleChange(event, index)}
+         onChange={(event) => {
+          if (event.target.value=='category'){
+              setIsVisible(true) 
+          } else {
+            setIsVisible(false)
+          }
+         }}
          required={true} 
        >
          <MenuItem value="">
@@ -211,15 +259,22 @@ const FormView = () => {
          <MenuItem value='email'>Email</MenuItem>
          <MenuItem value='category'>Category</MenuItem>
        
-       </Select>
-       
+       </Select> 
      </FormControl>
      <div style={{height:'20px'}}></div>
-          <FormControl sx={{maxWidth: '600px' , width:'80vw'}}>
+     {isVisible ?  <FormControl  sx={{maxWidth: '600px'}}>
+        <FormLabel>Category Options *</FormLabel>
+        <MultiTextFields  options={selectedFormField !=null?formdesign[selectedFormField].category:[]}/>
+      </FormControl> : ''}
+    
+     <div style={{height:'20px'}}></div>
+          <FormControl sx={{maxWidth: '600px' , width:'400px'}}>
        <InputLabel  required={true}  id='type'>Is this field rquired?</InputLabel>
        <Select
          labelId='required'
          id='required'
+         name='required'
+         defaultValue={selectedFormField !=null? `${formdesign[selectedFormField].required }`:''}
         // value={categories[index].value}
          label='Field Type'
       //   onChange={(event) => handleChange(event, index)}
@@ -233,9 +288,31 @@ const FormView = () => {
        </Select>
        
      </FormControl>
+     <div style={{height:'20px'}}></div>
+          <FormControl sx={{maxWidth: '600px' , width:'400px'}}>
+       <InputLabel  required={true}  id='type'>Should the field be unique?</InputLabel>
+       <Select
+         labelId='unique'
+         id='unique'
+         name='unique'
+         defaultValue={selectedFormField !=null? `${formdesign[selectedFormField].unique }`:null}
+        // value={categories[index].value}
+       
+      //   onChange={(event) => handleChange(event, index)}
+         required={true} 
+       >
+         <MenuItem value="">
+           <em>None</em>
+         </MenuItem>
+         <MenuItem value='true'>No</MenuItem>
+         <MenuItem value='false'>Unique for Form Instance</MenuItem>
+         <MenuItem value='false'>Unique for whole Form</MenuItem>
+       </Select>
+       
+     </FormControl>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialog} style={{ color: '#FFA500'}}>Cancel</Button>
+          {selectedFormField !=null ?  <Button onClick={handleDeleteField} style={{ color: '#FFA500'}}>Delete</Button>:null}  
           <Button type="submit" style={{ color: '#FFA500' }}>Add</Button>
         </DialogActions>
       </Dialog>

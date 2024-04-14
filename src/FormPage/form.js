@@ -19,10 +19,12 @@ import SecurityIcon from '@mui/icons-material/Security';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { Grid } from '@mui/material';
+import { Button, Grid, IconButton } from '@mui/material';
 import MyChartComponent from '../Homepage/Barchart';
 import QrCode2Icon from '@mui/icons-material/QrCode2';
-
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import AddNewForm from '../AddNewFoem/AddNewForm';
+import FormViewDefine from '../FormMethodsView/FormViewDefine';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -62,6 +64,8 @@ function countOccurrences(data) {
   
 
  function FormHomePage({ data }) {
+  const [qrOptions, setQrOptions] = React.useState(false); 
+  const [qrOptionsID, setQrOptionsID] = React.useState(null); 
   const [idCounter, setIdCounter] = React.useState(1); // Initial value of the counter
   const [filteredRows, setFilteredRows] = React.useState([]);
   const generateUniqueId = () => {
@@ -72,10 +76,10 @@ function countOccurrences(data) {
 
   const [rows,setRows]= React.useState(data == null ? [
     { formid:'sdjhhsdhj', id: '1', last_Name: 'Snow', first_Name: 'Jon' },
-    {formid:'sdjhhsdhj', id: '2', last_Name: 'Lannister', first_Name: 'Cersei' },
-    { formid:'sdjhhsdhj',id: '3', last_Name: 'Lannister', first_Name: 'Jaime' },
-    {formid:'sdjhhsdhj', id: '4', last_Name: 'Stark', first_Name: 'Arya' },
-    { formid:'sdjhhsdhj',id: '5', last_Name: 'Targaryen', first_Name: 'Daenerys' },
+    {formid:'dhj', id: '2', last_Name: 'Lannister', first_Name: 'Cersei' },
+    { formid:'sdhj',id: '3', last_Name: 'Lannister', first_Name: 'Jaime' },
+    {formid:'jhhsdhj', id: '4', last_Name: 'Stark', first_Name: 'Arya' },
+    { formid:'sd',id: '5', last_Name: 'Targaryen', first_Name: 'Daenerys' },
    
   ]:data)
   function getFormIdById(id) {
@@ -152,7 +156,9 @@ function formatColumnName(name) {
              icon={<QrCode2Icon />}
              label="QR Code"
              onClick={()=>{
-              url(`/qrcode/${getFormIdById(params.id)}`)
+              setQrOptions(true)
+              setQrOptionsID(getFormIdById(params.id))
+          //    url(`/qrcode/${getFormIdById(params.id)}`)
             }}
              showInMenu
            /> 
@@ -185,6 +191,12 @@ addActions()
   return (
     <div>
 <Header activeIndex={1}  />
+<div style={{height:'70px',color:'white'}}>hasjjhsahj</div>
+<div style={{color:'black', height:'25px',marginLeft:'70vw'}}>
+<AddNewForm />
+<FormViewDefine  view={qrOptions} id={qrOptionsID} />
+</div>
+
 <div className='top-header'>
 <Grid container spacing={2}>
   {data != null ?  <div>
