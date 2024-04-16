@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { json, useParams } from 'react-router-dom';
+import { json, useNavigate, useParams } from 'react-router-dom';
 import Header from '../Header/header';
 import './formview.css'
 import Box from '@mui/material/Box';
@@ -13,7 +13,7 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormHelperText from '@mui/material/FormHelperText';
-import { Button, FormLabel, IconButton, Typography } from '@mui/material';
+import { Button, FormLabel, IconButton, Slide, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Dialog from '@mui/material/Dialog';
@@ -24,6 +24,13 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { jsx } from '@emotion/react';
 import EditIcon from '@mui/icons-material/Edit';
 import MultiTextFields from './MultiForm';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../Firebase';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -34,7 +41,24 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 const FormView = () => {
+  const [display, setDisplay] = React.useState(false);
+  const url = useNavigate();   
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/firebase.User
+      const uid = user.uid;
+      // ...
+      setDisplay(true)
+    } else {
+    
+    
+      url('/login')
+    }
+  });
   const [open, setOpen] = useState(false);
+  const [formName, setFormName] = useState('Student');
+  const [formNameChange, setFormNameChange] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedFormField, setSelectedFormField] = useState(null);
   const [formdesign, setFormdesign] = useState([
@@ -96,14 +120,53 @@ const handleDeleteField = () => {
 
   
   return (
-    <div >
+    <div  style={{
+      display:display ? 'block':'none'
+    }}>
          <Header activeIndex={1} />
          <div className='top-header'>
+         <Dialog   
+      open={formNameChange}
+      onClose={()=>{
+        setFormNameChange(false)
+      }}
+      TransitionComponent={Transition}
+      PaperProps={{
+        component: 'form',
+        onSubmit: (event) => {
+          event.preventDefault();
+          const formData = new FormData(event.currentTarget);
+          const formJson = Object.fromEntries(formData.entries());
+          const keys = Object.keys(formJson);
+          setFormName(formJson['formname'])
+          setFormNameChange(false)
+        }
+      }}
+      >
+        <DialogTitle>Change Name</DialogTitle>
+        <DialogContent>
+            <div style={{height:'10px'}}></div>
+    <FormControl>
+        <TextField 
+        style={{width:'350px'}}
+         name="formname"
+         label="Form Name"
+         required
+        />
+    </FormControl>
+        
+        </DialogContent>
+        <DialogActions>
+        <Button type="submit" style={{ color: '#FFA500' }}>Add</Button>
+        </DialogActions>
+      </Dialog>
          <Box sx={{ flexGrow: 1 }}>
          <Grid container spacing={2}>
   <Grid item xs={8}>
   <item><form  onSubmit={handleSubmit} className='form'> 
-  <div style={{display:'flex', flexDirection:'row'}}><h2 style={{fontSize:'29px'}}><CreateIcon /> STUDENT <span style={{fontSize:'20px',fontWeight:'400'}}>
+  <div style={{display:'flex', flexDirection:'row'}}><h2 style={{fontSize:'29px'}}><IconButton onClick={(event)=>{
+    setFormNameChange(true)
+  }}><CreateIcon  /></IconButton> {formName} <span style={{fontSize:'20px',fontWeight:'400'}}>
     Mak Fellowship - 192</span></h2></div>
   <FormControl  fullWidth sx={{ m:1,  }} variant="standard">
     

@@ -89,7 +89,7 @@ const Header = ({activeIndex}) => {
               <MenuIcon />
             </IconButton>
             <div></div>
-          <img src='download.png' className='header-title' sx={{ flexGrow: 1 }}>
+          <img src='download.png' className='header-title' sx={{ flexGrow: 1 }} style={{display:'none'}}>
             
             </img>
             <Typography className='header-title' sx={{ flexGrow: 1 }}>

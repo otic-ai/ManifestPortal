@@ -7,8 +7,7 @@ import Stack from '@mui/material/Stack';
 import { orange } from '@mui/material/colors';
 import SvgIcon from '@mui/material/SvgIcon';
 import EditNoteIcon from '@mui/icons-material/EditNote';
-import StorageIcon from '@mui/icons-material/Storage';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import LogoutIcon from '@mui/icons-material/Logout';
 import AdminPanelSettings from '@mui/icons-material/AdminPanelSettings';
 
 function HomeIcon(props) {
@@ -27,8 +26,8 @@ const Sidebartask = ({activeIndex }) => {
   {tagName: 'Forms',  tag: <EditNoteIcon className='icon'/>,
   page:'/forms'},
  
-  {tagName: 'Admin',  tag: <AdminPanelSettings className='icon'/>,
-  page:'/'},
+  {tagName: 'LogOut',  tag: <LogoutIcon className='icon'/>,
+  page:'/login'},
    
    
   ];

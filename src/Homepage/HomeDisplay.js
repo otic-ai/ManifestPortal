@@ -17,6 +17,9 @@ import CustomizeForm from './CustomizationDialogBox';
 import Enhancedtable from './Table';
 import MyCalendar from './Date2';
 import Home from './home';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../Firebase';
+import { useNavigate } from 'react-router-dom';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -33,6 +36,22 @@ export default function HomeGrid() {
     const [height, setHeight] = React.useState(0);
     const [height2, setHeight2] = React.useState(0);
     const [screenwidth, setScreenwidth] = React.useState(0);
+
+    const [display, setDisplay] = React.useState(false);
+    const url = useNavigate();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        const uid = user.uid;
+        // ...
+        setDisplay(true)
+      } else {
+      
+      
+        url('/login')
+      }
+    });
 
     React.useEffect(() => {
         const handleResize = () => {
@@ -75,9 +94,11 @@ const handleFirstComponentRefSecondGrid = (el) => {
   
     
       const data = [{'d':{'car':2882,'fn':874374,'fghdfn':874374},'di74787845dji':{'car':2882,'fn':874374,'fghdfn':874374},'didyweyyji':{'car':2882,'fn':874374,'fghdfn':874374},'didji':{'car':2882,'fn':874374,'fghdfn':874374},'dididfdhhji':{'car':2882,'fn7':87884,'f':8744},'dididi':{'car':2882,'fn7':874,},'sdjhsdjh':{'car':2882,'fn':874374}}];
-  
+    
   return (
-    <div className='home' >
+    <div style={{
+      display:display ? 'block':'none'
+    }} className='home' >
           <Header activeIndex={0} />
           <div className='top-header'>
     <Box sx={{ flexGrow: 1 }}>

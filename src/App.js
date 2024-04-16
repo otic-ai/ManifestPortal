@@ -12,14 +12,24 @@ import QRCode from './QR CODE/qrcode';
 import QRCod from './QR CODE/qrcode';
 import { FormLabel } from '@mui/material';
 import FormView from './FormPage/FormView';
+import app from './Firebase';
+import { initializeApp } from "firebase/app";
+import SignInSide from './Login/login';
+import SignUp from './SignUp/signup';
+import ResetPassword from './ResetPassword/Resetpassword';
+
 
 
 function App() {
+ 
 
   return (
     <BrowserRouter>
     <Routes>
+    <Route path="/signup" element={<SignUp />} />
+    <Route path="/login" element={<SignInSide />} />
       <Route path="/" element={<HomeGrid />} />
+      <Route path="/reset" element={<ResetPassword />} />
       <Route path="/forms" element={<FormHomePage />} />
       <Route path="/qrcode/:code" element={<QRCod />} />
       <Route path="/data/:formid" element={<FormData />} />

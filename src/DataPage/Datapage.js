@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
@@ -25,6 +25,8 @@ import Header from '../Header/header';
 import MyChartComponent from '../Homepage/Barchart';
 import FormHomePage from '../FormPage/form';
 import QrCode2Icon from '@mui/icons-material/QrCode2';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../Firebase';
 
   
 function createData(id, name, calories, fat, carbs, protein) {
@@ -222,6 +224,21 @@ function createData(id, name, calories, fat, carbs, protein) {
   
 
 const FormData = () => {
+  const [display, setDisplay] = React.useState(false);
+  const url = useNavigate();   
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/firebase.User
+      const uid = user.uid;
+      // ...
+      setDisplay(true)
+    } else {
+    
+    
+      url('/login')
+    }
+  });
     let { formid } = useParams();
     const data = [{'d':{id:1,'car':2882,'fn':874374,'fghdfn':874374},'di74787845dji':{'car':2882,'fn':874374,'fghdfn':874374},'didyweyyji':{'car':2882,'fn':874374,'fghdfn':874374},'didji':{'car':2882,'fn':874374,'fghdfn':874374},'dididfdhhji':{'car':2882,'fn7':87884,'f':8744},'dididi':{'car':2882,'fn7':874,},'sdjhsdjh':{'car':2882,'fn':874374}}];
   const test= [
@@ -230,7 +247,9 @@ const FormData = () => {
     { formid:'sdjdfdhj', id: '4', last_Name: 'Sow', first_Name: 'Jojhjdfjhn' },
   ];
   return (
-    <div>
+    <div style={{
+      display:display ? 'block':'none'
+    }}>
          <Header activeIndex={1} />
          <div className='top-header'>
        
