@@ -49,7 +49,7 @@ function QRCod() {
       </div>
       <div className='copy-link' >
         <div className='links'>{link}</div>
-        <div style={{width:'20px'}}></div>
+        <div style={{width:'60px',height:'10px'}}></div>
         <div className='button'>
         <CopyToClipboard text={textToCopy} onCopy={handleCopy}>
       <Button variant="outlined" style={{color:'orange', fontWeight:'bold', border:'0px solid orange'}} startIcon={<ContentCopyIcon />}>

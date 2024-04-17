@@ -166,8 +166,7 @@ const handleDeleteField = () => {
   <item><form  onSubmit={handleSubmit} className='form'> 
   <div style={{display:'flex', flexDirection:'row'}}><h2 style={{fontSize:'29px'}}><IconButton onClick={(event)=>{
     setFormNameChange(true)
-  }}><CreateIcon  /></IconButton> {formName} <span style={{fontSize:'20px',fontWeight:'400'}}>
-    Mak Fellowship - 192</span></h2></div>
+  }}><CreateIcon  /></IconButton> {formName} </h2></div>
   <FormControl  fullWidth sx={{ m:1,  }} variant="standard">
     
     {formdesign.map((value,index) =>(

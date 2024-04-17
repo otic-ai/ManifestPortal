@@ -128,7 +128,7 @@ const dataset =  MyComponent("",data )
     };
   }, [data]);
 
-  return <div id="main" style={{ width: '100%', height: '600px' }}></div>;
+  return <div id="main" style={{ minWidth:'400px',width: '100%', height: '600px' }}></div>;
 };
 
 export default MyChartComponent;
