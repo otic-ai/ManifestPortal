@@ -20,7 +20,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { jsx } from '@emotion/react';
-
+import { createFormAPI } from '../Http/FormCreate';
 const AddNewForm = ({ mode }) => {
     const [open, setOpen] = React.useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -49,12 +49,18 @@ const AddNewForm = ({ mode }) => {
     style={{minWidth:'550px'}}
     PaperProps={{
       component: 'form',
-      onSubmit: (event) => {
+      onSubmit: async(event) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         const formJson = Object.fromEntries(formData.entries());
-     handleCloseDialog();
-     window.location.reload();
+     try{
+      await  createFormAPI(formJson) 
+      handleCloseDialog();
+      window.location.reload();
+     }catch(e){
+      alert(e)
+     }
+   
       },
     }}
   >
@@ -86,7 +92,7 @@ const AddNewForm = ({ mode }) => {
  <div style={{height:'20px'}}></div>
  <FormControl    sx={{maxWidth: '600px' , width:'400px'}} variant="standard"> 
       <TextField
-    required={true}
+    required={false}
     inputProps={{ accept: '.xlsx,.xls,.csv' }}
      disableUnderline
      id='file'

@@ -13,7 +13,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import {  signInWithEmailAndPassword, signOut   } from 'firebase/auth';
+import {  browserLocalPersistence, getAuth, onAuthStateChanged, setPersistence, signInWithEmailAndPassword, signOut   } from 'firebase/auth';
 import { auth } from '../Firebase';
 
 
@@ -46,24 +46,30 @@ export default function SignInSide() {
          
  
     const url = useNavigate();
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      const formData = new FormData(event.currentTarget);
+      const email = formData.get('email');
+      const password = formData.get('password');
     
-      signInWithEmailAndPassword(auth,data.get('email'),data.get('password')).then((userCredential) => {
-        // Signed in
+      try {
+        // Sign in the user with email and password
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-        url("/")
-        console.log(user);
-    })
-    .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage)
-        alert(errorMessage)
-    });
-      
-  };
+    
+        // User signed in successfully
+        console.log('User signed in:', user);
+    
+        // Redirect to home page (change URL as needed)
+        url('/');
+    
+      } catch (error) {
+        // Handle sign-in errors
+        console.error('Sign-in error:', error.message);
+        alert('Failed to sign in. Please check your credentials.');
+      }
+    };
+    
 
   return (
     <ThemeProvider theme={defaultTheme}>

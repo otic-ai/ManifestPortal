@@ -204,7 +204,7 @@ function formatColumnName(name) {
 addActions()
    React.useEffect(()=>{
     
-   },[open])
+   },[open,display])
    onAuthStateChanged(auth, (user) => {
     if (user) {
       // User is signed in, see docs for a list of available properties
@@ -215,66 +215,69 @@ addActions()
     } else {
       // User is signed out
       // ...
+      setDisplay(false)
       
       url('/login')
     }
   });
-  return (
-    <div  style={{
-      display:display ? 'block':'none'
-    }}>
-     
-<Header activeIndex={1}  />
-<FormManagement view={open} />
-<div style={{height:'70px',color:'white'}}>hasjjhsahj</div>
-<div style={{color:'black', height:'0px',marginLeft:'70vw'}}>
-<AddNewForm />
-<FormViewDefine  view={qrOptions} id={qrOptionsID} />
-</div>
+  if (display){
 
-<div className='top-header'>
-<Grid container spacing={2}>
-  {data != null ?  <div>
-    <Grid item style={{width:'100vw'}}>
-    <Item>
-      <MyChartComponent data={resultList} charttype={'bar'} />
-    </Item>
-  </Grid>
-  
+    return (
+      <div  >
+       
+  <Header activeIndex={1}  />
+  <FormManagement view={open} />
+  <div style={{height:'70px',color:'white'}}>hasjjhsahj</div>
+  <div style={{color:'black', height:'0px',marginLeft:'70vw'}}>
+ {data ==null ?  <AddNewForm /> :''}
+  <FormViewDefine  view={qrOptions} id={qrOptionsID} />
   </div>
- 
- :null}
-  <div style={{height:'20px', color:'white'}}>ddfdfdf</div>
   
-  <Box sx={{ marginLeft:'1%', width: '99%' }}>
-      <DataGrid autoHeight onFilterModelChange={(dat)=>{
-        const filter = rows.filter(row =>{
-          return row.columnName.toLowerCase().includes(dat.items[0].value.toLowerCase());
-        })
-        setFilteredRows(filter)
-      }} components={{
-    Toolbar: GridToolbar,
-  }} processRowUpdate={(updatedRow, originalRow)=>{
-        const value = updatedRow['id'];
-        
-      }} editMode="row" sx={{
-       "& .MuiDataGrid-columnHeader:focus, & .MuiDataGrid-columnHeader:focus-within": {
-        outline: "none",
-      },
- "& .MuiDataGrid-cell:focus-within, & .MuiDataGrid-cell:focus": {
-    outline: "0.5px solid #FFA500",
-  
-  },
- '& .dx-datagrid-focus-overlay':{
-  outline: '0.5px solid #FF0000',
-}
-      }} rows={rows} columns={columns}   />
-    </Box>
+  <div className='top-header'>
+  <Grid container spacing={2}>
+    {data != null ?  <div>
+      <Grid item style={{width:'100vw'}}>
+      <Item>
+        <MyChartComponent data={resultList} charttype={'bar'} />
+      </Item>
     </Grid>
-    </div>
+    
     </div>
    
-  );
+   :null}
+    <div style={{height:'20px', color:'white'}}>ddfdfdf</div>
+    
+    <Box sx={{ marginLeft:'1%', width: '99%' }}>
+        <DataGrid autoHeight onFilterModelChange={(dat)=>{
+          const filter = rows.filter(row =>{
+            return row.columnName.toLowerCase().includes(dat.items[0].value.toLowerCase());
+          })
+          setFilteredRows(filter)
+        }} components={{
+      Toolbar: GridToolbar,
+    }} processRowUpdate={(updatedRow, originalRow)=>{
+          const value = updatedRow['id'];
+          
+        }} editMode="row" sx={{
+         "& .MuiDataGrid-columnHeader:focus, & .MuiDataGrid-columnHeader:focus-within": {
+          outline: "none",
+        },
+   "& .MuiDataGrid-cell:focus-within, & .MuiDataGrid-cell:focus": {
+      outline: "0.5px solid #FFA500",
+    
+    },
+   '& .dx-datagrid-focus-overlay':{
+    outline: '0.5px solid #FF0000',
+  }
+        }} rows={rows} columns={columns}   />
+      </Box>
+      </Grid>
+      </div>
+      </div>
+     
+    );
+  }else{}
+ 
 }
 
 export default FormHomePage

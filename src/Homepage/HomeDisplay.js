@@ -20,6 +20,7 @@ import Home from './home';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../Firebase';
 import { useNavigate } from 'react-router-dom';
+import createAxiosInstance from '../Http/https';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -36,6 +37,7 @@ export default function HomeGrid() {
     const [height, setHeight] = React.useState(0);
     const [height2, setHeight2] = React.useState(0);
     const [screenwidth, setScreenwidth] = React.useState(0);
+    const [currentUser, setCurrentUser] =  React.useState(null);
 
     const [display, setDisplay] = React.useState(false);
     const url = useNavigate();
@@ -46,8 +48,9 @@ export default function HomeGrid() {
         const uid = user.uid;
         // ...
         setDisplay(true)
+        setCurrentUser(user);
       } else {
-      
+        setCurrentUser(null);
       
         url('/login')
       }
@@ -94,7 +97,11 @@ const handleFirstComponentRefSecondGrid = (el) => {
   
     
       const data = [{'d':{'car':2882,'fn':874374,'fghdfn':874374},'di74787845dji':{'car':2882,'fn':874374,'fghdfn':874374},'didyweyyji':{'car':2882,'fn':874374,'fghdfn':874374},'didji':{'car':2882,'fn':874374,'fghdfn':874374},'dididfdhhji':{'car':2882,'fn7':87884,'f':8744},'dididi':{'car':2882,'fn7':874,},'sdjhsdjh':{'car':2882,'fn':874374}}];
-    
+    const axiosInstance = async ()=>{
+      const test = await createAxiosInstance()
+      console.log(test)
+    }
+    axiosInstance()
   return (
     <div style={{
       display:display ? 'block':'none'

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './sidebar.css';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Stack from '@mui/material/Stack';
@@ -11,6 +11,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import AdminPanelSettings from '@mui/icons-material/AdminPanelSettings';
 
 function HomeIcon(props) {
+
   return (
     <SvgIcon {...props}>
       <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
@@ -20,6 +21,7 @@ function HomeIcon(props) {
 
 
 const Sidebartask = ({activeIndex }) => {
+  const url = useNavigate();
   const items = [
     {tagName: 'Home',  tag: <HomeIcon className='icon'/>,
   page:'/'},
@@ -36,11 +38,13 @@ const Sidebartask = ({activeIndex }) => {
   return (
     <ul className="sidebar-list">
        {items.map((item, index) => (
-          <li key={index} className={activeIndex === index ? 'actived' : ''}><Link className="link" to={`${item.page}`}>
+          <li onClick={()=>{
+            url(`${item.page}`)
+          }} key={index} className={activeIndex === index ? 'actived' : ''}>
             <span></span>
             <span >{item.tag}</span> 
             <span className='sidebar-words'>{item.tagName}</span> 
-            </Link>
+        
           </li>
         ))}
       </ul>

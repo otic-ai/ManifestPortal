@@ -27,6 +27,7 @@ import FormHomePage from '../FormPage/form';
 import QrCode2Icon from '@mui/icons-material/QrCode2';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../Firebase';
+import { FormDataViewAPI } from '../Http/ViewFormData';
 
   
 function createData(id, name, calories, fat, carbs, protein) {
@@ -240,12 +241,16 @@ const FormData = () => {
     }
   });
     let { formid } = useParams();
-    const data = [{'d':{id:1,'car':2882,'fn':874374,'fghdfn':874374},'di74787845dji':{'car':2882,'fn':874374,'fghdfn':874374},'didyweyyji':{'car':2882,'fn':874374,'fghdfn':874374},'didji':{'car':2882,'fn':874374,'fghdfn':874374},'dididfdhhji':{'car':2882,'fn7':87884,'f':8744},'dididi':{'car':2882,'fn7':874,},'sdjhsdjh':{'car':2882,'fn':874374}}];
+   
   const test= [
     { formid:'sdjhhsdhj', id: '1', last_Name: 'Snow', first_Name: 'Jon' },
     { formid:'sdjhhsdhj', id: '3', last_Name: 'Snow', first_Name: 'Jon' },
     { formid:'sdjdfdhj', id: '4', last_Name: 'Sow', first_Name: 'Jojhjdfjhn' },
   ];
+  const [data,setData]= React.useState(test)
+  React.useEffect(()=>{
+  const responseData=  FormDataViewAPI('5')
+  },[data])
   return (
     <div style={{
       display:display ? 'block':'none'
