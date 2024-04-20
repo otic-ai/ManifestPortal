@@ -99,6 +99,16 @@ function countOccurrences(data) {
     { formid:'sd',id: '5', last_Name: 'Targaryen', first_Name: 'Daenerys' },
    
   ]:data)
+  React.useEffect(() => {
+    if (data) {
+      const formattedRows = data.map((row, index) => ({
+        ...row,
+        // Generate auto ID based on index (add 1 to start from 1)
+        id: (index + 1).toString(),
+      }));
+      setRows(formattedRows);
+    }
+  }, [data]);
   function getFormIdById(id) {
     const row = rows.find(row => row.id === id);
     return row ? row.formid : null;
@@ -211,6 +221,7 @@ addActions()
       // https://firebase.google.com/docs/reference/js/firebase.User
       const uid = user.uid;
       // ...
+      
       setDisplay(true)
     } else {
       // User is signed out
@@ -235,7 +246,7 @@ addActions()
   
   <div className='top-header'>
   <Grid container spacing={2}>
-    {data != null ?  <div>
+    {data != null ?  <div style={{display:'none'}}>
       <Grid item style={{width:'100vw'}}>
       <Item>
         <MyChartComponent data={resultList} charttype={'bar'} />
@@ -248,28 +259,12 @@ addActions()
     <div style={{height:'20px', color:'white'}}>ddfdfdf</div>
     
     <Box sx={{ marginLeft:'1%', width: '99%' }}>
-        <DataGrid autoHeight onFilterModelChange={(dat)=>{
-          const filter = rows.filter(row =>{
-            return row.columnName.toLowerCase().includes(dat.items[0].value.toLowerCase());
-          })
-          setFilteredRows(filter)
-        }} components={{
+        <DataGrid autoHeight  components={{
       Toolbar: GridToolbar,
     }} processRowUpdate={(updatedRow, originalRow)=>{
           const value = updatedRow['id'];
           
-        }} editMode="row" sx={{
-         "& .MuiDataGrid-columnHeader:focus, & .MuiDataGrid-columnHeader:focus-within": {
-          outline: "none",
-        },
-   "& .MuiDataGrid-cell:focus-within, & .MuiDataGrid-cell:focus": {
-      outline: "0.5px solid #FFA500",
-    
-    },
-   '& .dx-datagrid-focus-overlay':{
-    outline: '0.5px solid #FF0000',
-  }
-        }} rows={rows} columns={columns}   />
+        }} editMode="row" rows={rows} columns={columns}   />
       </Box>
       </Grid>
       </div>
