@@ -23,10 +23,10 @@ function HomeIcon(props) {
 const Sidebartask = ({activeIndex }) => {
   const url = useNavigate();
   const items = [
-    {tagName: 'Home',  tag: <HomeIcon className='icon'/>,
-  page:'/'},
+ //   {tagName: 'Home',  tag: <HomeIcon className='icon'/>,
+  //page:'/'},
   {tagName: 'Forms',  tag: <EditNoteIcon className='icon'/>,
-  page:'/forms'},
+  page:'/'},
  
   {tagName: 'LogOut',  tag: <LogoutIcon className='icon'/>,
   page:'/login'},

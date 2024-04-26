@@ -1,12 +1,12 @@
 .top-header {
-    margin-top: 185px;
+    margin-top: 285px;
 margin-left: 4px;
 display: flex;
 justify-content: center;
 align-items: center
 }
 .copy-link {
-    margin-top: 100px;
+    margin-top: 70px;
     display: flex;
     position: absolute; /* Make it positioned relative to the viewport */
   top: 50%;

@@ -27,6 +27,7 @@ import MultiTextFields from './MultiForm';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../Firebase';
 import SignInSide from '../Login/login';
+import { FormDesignAPI, SubmitFormDesignAPI } from '../Http/FormDesignAPI';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -42,21 +43,11 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 const FormView = () => {
+  const params = useParams();
+  const { formid } = params; 
   const [display, setDisplay] = React.useState(false);
-  const url = useNavigate();   
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/firebase.User
-      const uid = user.uid;
-      // ...
-      setDisplay(true)
-    } else {
-    
-    setDisplay(false)
-    //  url('/login')
-    }
-  });
+  const url = useNavigate();  
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [open, setOpen] = useState(false);
   const [formName, setFormName] = useState('Student');
   const [formNameChange, setFormNameChange] = useState(false);
@@ -67,13 +58,53 @@ const FormView = () => {
       fieldname: 'Name',
       required: true,
       value: null,
-      id: 'fname',
-      dropdown: true,
+      id: 'Name',
+      dropdown: false,
       inputtype: 'text',
-      category: ['sdhh', 'benon','jjdsjksdjk','hsdjhsdjh'],
+      category: ['sdhh', 'benon', 'jjdsjksdjk', 'hsdjhsdjh'],
+    },
+    {
+      fieldname: 'Contact',
+      required: true,
+      value: null,
+      id: 'Contact',
+      dropdown: false,
+      inputtype: 'text',
+      category: ['sdhh', 'benon', 'jjdsjksdjk', 'hsdjhsdjh'],
     },
   ]);
+  const fetchData = async () => {
+    try {
+      const responseD = await FormDesignAPI(formid);
+      const responseData = responseD['data'];
+      const formName1 = responseD['name']
+    
+   if (responseData.length ===0){}else{
+   setFormdesign(responseData)
+   setCategories(responseData)
+   setFormName(formName1)
+   }
+  
+    } catch (error) {
+      console.error('Error fetching form data:', error);
+      
+    }
+  }; 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserLoggedIn(true);
+        setDisplay(true);
+        fetchData()
+      } else {
+        setUserLoggedIn(false);
+        setDisplay(false)
+        url('/login');
+      }
+    });
 
+    return () => unsubscribe();
+  }, []);
   const [categories, setCategories] = useState(formdesign);
 
  
@@ -119,9 +150,9 @@ const handleDeleteField = () => {
 
  
 
-  
+if (display){
   return (
-    display ? <div >
+     <div >
     <Header activeIndex={1} />
     <div className='top-header'>
     <Dialog   
@@ -166,6 +197,14 @@ const handleDeleteField = () => {
 <div style={{display:'flex', flexDirection:'row'}}><h2 style={{fontSize:'29px'}}><IconButton onClick={(event)=>{
 setFormNameChange(true)
 }}><CreateIcon  /></IconButton> {formName} </h2></div>
+<Button sx={{ marginLeft:'50%',backgroundColor: '#F28C28', minWidth:'150px' ,
+ '&:hover': {
+   backgroundColor: '#FFA500', // Change this to the desired hover color
+ },}} 
+ onClick={async()=>{
+ await SubmitFormDesignAPI(formid,formdesign,formName)
+ }}
+ variant="contained" >Save Changes</Button>
 <FormControl  fullWidth sx={{ m:1,  }} variant="standard">
 
 {formdesign.map((value,index) =>(
@@ -222,11 +261,7 @@ setOpen(true);
 <AddCircleIcon /> Add 
 </IconButton>  
 </FormControl>
-<Button sx={{ marginLeft:'50%',backgroundColor: '#F28C28', minWidth:'150px' ,
- '&:hover': {
-   backgroundColor: '#FFA500', // Change this to the desired hover color
- },}} 
- variant="contained" type="submit">Submit</Button>
+
 </form>  </item>
 </Grid>
 </Grid>
@@ -259,7 +294,9 @@ keys.forEach((item) => {
    categoryList.push(formJson[item]);
  }
 });
-
+    if (categoryList.length===0){
+      categoryList.push('')
+    }
        const finalDesign = {...newDesign,'category':categoryList}  
        if (selectedFormField==null){
          formdesign.push(finalDesign)
@@ -377,9 +414,10 @@ keys.forEach((item) => {
      <Button type="submit" style={{ color: '#FFA500' }}>Add</Button>
    </DialogActions>
  </Dialog>
-</div>: <SignInSide />
-    
+</div>
+   
   )
+}
 }
 
 export default FormView

@@ -17,12 +17,15 @@ import AddIcon from '@mui/icons-material/Add';
 import AddTaskIcon from '@mui/icons-material/AddTask';
 import { DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 import { FormControl } from '@mui/base';
+import { FormManagementAPI, FormManagementSubmitAPI } from '../Http/FormManagementAPI';
+import dayjs from 'dayjs';
+import { Await } from 'react-router-dom';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function FormManagement({ view }) {
+export default function FormManagement({ view,form }) {
   const [open, setOpen] = React.useState(view);
   const [openformadd, setOpenformadd] = React.useState(false);
   const [selectedFile , setSelectedFile ] = React.useState(false);
@@ -32,15 +35,11 @@ export default function FormManagement({ view }) {
     // Handle the selected file here...
   };
   const [instance, setInstance] = React.useState([
-    {
-      name: 'men gather',
-      default: true,
-      endDate: ''
-    },
+ 
     {
       name: 'men gather1',
-      default: false,
-      endDate: ''
+      is_active: false,
+      close_date: ''
     }
   ]);
 
@@ -52,13 +51,27 @@ export default function FormManagement({ view }) {
     setOpenformadd(false)
 // Consider an alternative way to handle closing the dialog
   };
+  const fetchData = async () => {
+    try {
+      const responseData = await FormManagementAPI(form);
+      const formattedData = responseData.data.map(item => ({
+        ...item,
+        close_date:  dayjs(item.close_date), // Append a default time (00:00:00) to convert date to datetime
+      }));
+      setInstance(formattedData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+  
   React.useEffect(() => {
     setOpen(view);
+    fetchData()
   }, [view]);
 
   const handleSwitchChange = (index) => (event) => {
     const updatedInstances = [...instance];
-    updatedInstances[index].default = event.target.checked;
+    updatedInstances[index].is_active = event.target.checked;
     setInstance(updatedInstances);
   };
 
@@ -71,12 +84,17 @@ export default function FormManagement({ view }) {
         TransitionComponent={Transition}
         PaperProps={{
           component: 'form',
-          onSubmit: (event) => {
+          onSubmit: async(event) => {
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
             const formJson = Object.fromEntries(formData.entries());
             const keys = Object.keys(formJson);
-            alert(JSON.stringify(formJson));
+          //  alert(JSON.stringify(formJson));
+          const newDate = {
+            ...formJson,
+            formid:form
+          }
+          await FormManagementSubmitAPI(newDate)
             handleClose();
           }
         }}
@@ -104,13 +122,13 @@ export default function FormManagement({ view }) {
             flexDirection: 'column'
           }}
         >
- <div style={{ left: '0px', fontSize: '23px', fontWeight: 'bold' }}>Targets</div>
+ 
           <div style={{ height: '10px' }}></div>
           <div style={{ left: '0px', fontSize: '23px', fontWeight: 'bold' }}>Data Upload</div>
           <div style={{ height: '10px' }}></div>
           <FormControl variant="standard"> 
       <TextField
-    required={true}
+    required={false}
     inputProps={{ accept: '.xlsx,.xls,.csv' }}
      disableUnderline
      id='file'
@@ -134,17 +152,22 @@ export default function FormManagement({ view }) {
               <FormControlLabel
                 control={
                   <Switch
-                    checked={item.default}
+                    checked={item.is_active}
                     onChange={handleSwitchChange(index)}
                     name={`${item.name}`}
                   />
                 }
                 label={item.name}
               />
-              {item.default && ( // Conditionally render DateTimePicker if item.default is true
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DateTimePicker name={`date-${index}`} label="Close Date" />
-                </LocalizationProvider>
+              {item.is_active && ( // Conditionally render DateTimePicker if item.default is true
+                <LocalizationProvider dateAdapter={AdapterDayjs}
+                >
+                <DateTimePicker
+                  name={`date-${index}`}
+                  label="Close Date"
+                  defaultValue={item.close_date ? item.close_date : null} // Set the default value
+                />
+              </LocalizationProvider>
               )}
               <IconButton
                 onClick={() => {

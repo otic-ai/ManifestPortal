@@ -28,6 +28,8 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import FormManagement from '../FormManagement/FormManagement';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../Firebase';
+import { FormListAPI } from '../Http/ViewFormData';
+import { async } from '@firebase/util';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -75,6 +77,7 @@ function countOccurrences(data) {
   const [open, setOpen] = React.useState(false);
   const [qrOptions, setQrOptions] = React.useState(false); 
   const [qrOptionsID, setQrOptionsID] = React.useState(null); 
+  const [formManagementID, setFormManagementID] = React.useState(null); 
   const [idCounter, setIdCounter] = React.useState(1); // Initial value of the counter
   const [filteredRows, setFilteredRows] = React.useState([]);
   const [display, setDisplay] = React.useState(false);
@@ -92,21 +95,37 @@ function countOccurrences(data) {
     setOpen(false);
   };
   const [rows,setRows]= React.useState(data == null ? [
-    { formid:'sdjhhsdhj', id: '1', last_Name: 'Snow', first_Name: 'Jon' },
-    {formid:'dhj', id: '2', last_Name: 'Lannister', first_Name: 'Cersei' },
-    { formid:'sdhj',id: '3', last_Name: 'Lannister', first_Name: 'Jaime' },
-    {formid:'jhhsdhj', id: '4', last_Name: 'Stark', first_Name: 'Arya' },
-    { formid:'sd',id: '5', last_Name: 'Targaryen', first_Name: 'Daenerys' },
-   
+    {id:''}
   ]:data)
+  const fetchData = async () => {
+    try {
+      const responseData = await FormListAPI();
+   if (responseData.length ===0){}else{
+    const formattedRows =await responseData.map((row, index) => ({
+      ...row,
+    
+      id: (index + 1).toString(),
+    }));
+    setRows(formattedRows);
+   }
+  
+    } catch (error) {
+      console.error('Error fetching form data:', error);
+      
+    }
+  };
   React.useEffect(() => {
+    
     if (data) {
+     
       const formattedRows = data.map((row, index) => ({
         ...row,
         // Generate auto ID based on index (add 1 to start from 1)
         id: (index + 1).toString(),
       }));
       setRows(formattedRows);
+    } else{
+   fetchData()
     }
   }, [data]);
   function getFormIdById(id) {
@@ -138,14 +157,26 @@ function formatColumnName(name) {
   const resultList = [aggregateCounts];
   const keys = Object.keys(rows[0]).filter(key => key !== 'formid');
 
-  const columns = keys.map(key => ({
-    field: key,
-    headerName: formatColumnName(key), 
-    flex: key =='id'? undefined :0.1,
-    editable:key =='id'?  false:true,
-    headerClassName: "custom-header"
-  }));
+  
 
+  const columns = [
+    {
+        field: 'id',
+        headerName: '',
+        flex: 0.1,
+        editable: false,
+        headerClassName: "custom-header"
+    },
+    ...keys
+        .filter(key => key !== 'id')
+        .map(key => ({
+            field: key,
+            headerName: formatColumnName(key), 
+            flex: 0.1,
+            editable: true,
+            headerClassName: "custom-header"
+        }))
+];
   const addActions = async ()=>{
     if (data==null){
       await columns.push(   
@@ -166,7 +197,13 @@ function formatColumnName(name) {
              <GridActionsCellItem
                  icon={<ManageAccountsIcon />}
                  label="Form Management"
-                onClick={handleClickOpen}
+                onClick={async()=>{
+                  const indexNumber =await parseInt(params.id, 10);
+                  const tedt = await rows[indexNumber-1].formid
+                await setFormManagementID(tedt)
+                 
+                 await handleClickOpen()
+                }}
                 
                  showInMenu
                />  ,
@@ -212,32 +249,27 @@ function formatColumnName(name) {
   
   }
 addActions()
-   React.useEffect(()=>{
-    
-   },[open,display])
-   onAuthStateChanged(auth, (user) => {
+React.useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
     if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/firebase.User
-      const uid = user.uid;
-      // ...
       
       setDisplay(true)
     } else {
-      // User is signed out
-      // ...
+     
       setDisplay(false)
-      
-      url('/login')
+      url('/login');
     }
   });
+
+  return () => unsubscribe();
+}, []);
   if (display){
 
     return (
       <div  >
        
   <Header activeIndex={1}  />
-  <FormManagement view={open} />
+  <FormManagement view={open} form={formManagementID}/>
   <div style={{height:'70px',color:'white'}}>hasjjhsahj</div>
   <div style={{color:'black', height:'0px',marginLeft:'70vw'}}>
  {data ==null ?  <AddNewForm /> :''}

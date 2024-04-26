@@ -17,23 +17,25 @@ import { initializeApp } from "firebase/app";
 import SignInSide from './Login/login';
 import SignUp from './SignUp/signup';
 import ResetPassword from './ResetPassword/Resetpassword';
+import FormFill from './FormFill/FormFill';
 
 
 
 function App() {
- 
+ //   <Route path="/" element={<HomeGrid />} />
 
   return (
     <BrowserRouter>
     <Routes>
     <Route path="/signup" element={<SignUp />} />
     <Route path="/login" element={<SignInSide />} />
-      <Route path="/" element={<HomeGrid />} />
+   
       <Route path="/reset" element={<ResetPassword />} />
-      <Route path="/forms" element={<FormHomePage />} />
+      <Route path="/" element={<FormHomePage />} />
       <Route path="/qrcode/:code" element={<QRCod />} />
       <Route path="/data/:formid" element={<FormData />} />
       <Route path="/formview/:formid" element={<FormView />} />
+      <Route path="/form/:formid" element={<FormFill />} />
     </Routes>
   </BrowserRouter>
   );

@@ -1,11 +1,13 @@
+import { jsx } from "@emotion/react"
 import createAxiosInstance from "./https"
 
-export const FormDataViewAPI = async (id)=>{
+export const FormDesignAPI = async (id)=>{
     try{
         const axiosInstance = await createAxiosInstance()
-        const response = await axiosInstance.post('formdataview',{'id':id},{
+        const response = await axiosInstance.post('getformdesign',{'id':id},{
             withCredentials:false
         })
+        
         return response.data
     } catch(e){
         alert(e)
@@ -14,12 +16,13 @@ export const FormDataViewAPI = async (id)=>{
 
 }
 
-export const FormListAPI = async ()=>{
+export const SubmitFormDesignAPI = async (id,design,name)=>{
     try{
         const axiosInstance = await createAxiosInstance()
-        const response = await axiosInstance.post('forms',{'id':''},{
+        const response = await axiosInstance.post('editformdesign',{'id':id,'design':design,'name':name},{
             withCredentials:false
         })
+        window.location.reload();
         return response.data['data']
     } catch(e){
         alert(e)
@@ -27,3 +30,4 @@ export const FormListAPI = async ()=>{
    
 
 }
+

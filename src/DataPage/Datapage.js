@@ -7,13 +7,14 @@ import Header from '../Header/header';
 import FormHomePage from '../FormPage/form';
 
 const FormData = () => {
+  const { formid } = useParams();
   const [display, setDisplay] = React.useState(false);
   const [data, setData] = React.useState([
-    { '':'' },
+    { 'id':'' },
    
   ]);
   const url = useNavigate();
-  const { formid } = useParams();
+  
   const fetchData = async () => {
     try {
       const responseData = await FormDataViewAPI(formid);
@@ -43,13 +44,7 @@ const FormData = () => {
     };
   }, []);
 
-  React.useEffect(() => {
-   
-
-    
-      fetchData();
-    
-  }, []);
+ 
 
   return (
     <div style={{ display: display ? 'block' : 'none' }}>

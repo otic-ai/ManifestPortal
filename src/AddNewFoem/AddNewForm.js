@@ -6,11 +6,7 @@ import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
-import CreateIcon from '@mui/icons-material/Create';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormHelperText from '@mui/material/FormHelperText';
+import LoadingButton from '@mui/lab/LoadingButton';
 import { Button, FormLabel, IconButton, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -23,7 +19,7 @@ import { jsx } from '@emotion/react';
 import { createFormAPI } from '../Http/FormCreate';
 const AddNewForm = ({ mode }) => {
     const [open, setOpen] = React.useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const [selectedFile , setSelectedFile ] = useState(false);
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -51,6 +47,7 @@ const AddNewForm = ({ mode }) => {
       component: 'form',
       onSubmit: async(event) => {
         event.preventDefault();
+        setIsVisible(false)
         const formData = new FormData(event.currentTarget);
         const formJson = Object.fromEntries(formData.entries());
      try{
@@ -60,7 +57,7 @@ const AddNewForm = ({ mode }) => {
      }catch(e){
       alert(e)
      }
-   
+     setIsVisible(true)
       },
     }}
   >
@@ -106,7 +103,9 @@ const AddNewForm = ({ mode }) => {
     </DialogContent>
     <DialogActions>
       <Button onClick={handleCloseDialog} style={{ color: '#FFA500'}}>Cancel</Button>
-      <Button type="submit" style={{ color: '#FFA500' }}>Add</Button>
+     {isVisible ?   <Button type="submit"  style={{ color: '#FFA500' }}>Add</Button>: <LoadingButton loading variant="outlined">
+        Submit
+      </LoadingButton>}
     </DialogActions>
   </Dialog></div>
   )
