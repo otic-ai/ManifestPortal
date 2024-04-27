@@ -30,6 +30,10 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../Firebase';
 import { FormListAPI } from '../Http/ViewFormData';
 import { async } from '@firebase/util';
+import { SimpleDialog } from '../QR CODE/QRCodeChoice';
+import { FormInstancesAPI } from '../Http/QRCodeAPI';
+
+
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -81,6 +85,19 @@ function countOccurrences(data) {
   const [idCounter, setIdCounter] = React.useState(1); // Initial value of the counter
   const [filteredRows, setFilteredRows] = React.useState([]);
   const [display, setDisplay] = React.useState(false);
+  const [qrOptionsInstance, setQrOptionsInstance] = React.useState([]); 
+  const [openQR, setOpenQR] = React.useState(false);
+  const [selectedValue, setSelectedValue] = React.useState(null);
+
+  const handleClickOpenQR = () => {
+    setOpenQR(true);
+  };
+
+  const handleCloseQR = (value) => {
+    setOpenQR(false);
+    setSelectedValue(value);
+  };
+
   const generateUniqueId = () => {
     const newId = idCounter;
     setIdCounter(prevCounter => prevCounter + 1); // Increment the counter for the next ID
@@ -219,8 +236,19 @@ function formatColumnName(name) {
              <GridActionsCellItem
              icon={<QrCode2Icon />}
              label="QR Code"
-             onClick={()=>{
-             url(`/qrcode/${getFormIdById(params.id)}`)
+             onClick={async()=>{
+              try{
+                const id = getFormIdById(params.id);
+                const responseData1 = await FormInstancesAPI(id);
+              //  alert(JSON.stringify(responseData1.data))
+               await setQrOptionsInstance(responseData1.data);
+                alert(JSON.stringify(qrOptionsInstance));
+                handleClickOpenQR()
+              } catch(e){
+                alert('An error occurred')
+              }
+             
+          //   url(`/qrcode/${getFormIdById(params.id)}`)
             }}
              showInMenu
            /> 
@@ -262,7 +290,7 @@ React.useEffect(() => {
   });
 
   return () => unsubscribe();
-}, []);
+}, [qrOptionsInstance]);
   if (display){
 
     return (
@@ -270,6 +298,12 @@ React.useEffect(() => {
        
   <Header activeIndex={1}  />
   <FormManagement view={open} form={formManagementID}/>
+  <SimpleDialog
+        selectedValue={selectedValue}
+        open={openQR}
+        onClose={handleCloseQR}
+        options= {qrOptionsInstance}
+      />
   <div style={{height:'70px',color:'white'}}>hasjjhsahj</div>
   <div style={{color:'black', height:'0px',marginLeft:'70vw'}}>
  {data ==null ?  <AddNewForm /> :''}

@@ -14,3 +14,17 @@ export const QRCodeGenerationAPI = async (id)=>{
     }
    
 }
+
+export const FormInstancesAPI = async (id)=>{
+    try{
+        const axiosInstance = await createAxiosInstance()
+        const response = await axiosInstance.post('formInstances',{'id':id},{
+            withCredentials:false
+        })
+        
+        return response.data
+    } catch(e){
+        alert(e)
+    }
+   
+}
