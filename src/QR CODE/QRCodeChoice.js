@@ -14,7 +14,7 @@ import AddIcon from '@mui/icons-material/Add';
 import Typography from '@mui/material/Typography';
 import { blue } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
-
+import QrCode2Icon from '@mui/icons-material/QrCode2';
 
 export function SimpleDialog(props) {
   const { onClose, selectedValue, open, options } = props;
@@ -26,39 +26,26 @@ export function SimpleDialog(props) {
 
   const handleListItemClick = (value) => {
     onClose(value);
-    alert(value)
-  //  url(`/data/${getFormIdById(value)}`)
+  url(`/form/${value}`)
   };
 
   return (
     <Dialog onClose={handleClose} open={open}>
-      <DialogTitle>Set backup account</DialogTitle>
+      <DialogTitle>Select Form Instance</DialogTitle>
       <List sx={{ pt: 0 }}>
         {emails.map((email) => (
-          <ListItem disableGutters key={email}>
-            <ListItemButton onClick={() => handleListItemClick(email)}>
+          <ListItem disableGutters key={email.id}>
+            <ListItemButton onClick={() => handleListItemClick(email.id)}>
               <ListItemAvatar>
                 <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-                  <PersonIcon />
+                  <QrCode2Icon />
                 </Avatar>
               </ListItemAvatar>
-              <ListItemText primary={email} />
+              <ListItemText primary={email.name} />
             </ListItemButton>
           </ListItem>
         ))}
-        <ListItem disableGutters>
-          <ListItemButton
-            autoFocus
-            onClick={() => handleListItemClick('addAccount')}
-          >
-            <ListItemAvatar>
-              <Avatar>
-                <AddIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary="Add account" />
-          </ListItemButton>
-        </ListItem>
+     
       </List>
     </Dialog>
   );

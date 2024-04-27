@@ -24,7 +24,7 @@ import { jsx } from '@emotion/react';
 import EditIcon from '@mui/icons-material/Edit';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../Firebase';
-import { FormDesignAPI, SubmitFormDesignAPI } from '../Http/FormDesignAPI';
+import { decryptFormID, FormDesignAPI, SubmitFormDesignAPI } from '../Http/FormDesignAPI';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -46,33 +46,23 @@ const FormFill = () => {
   const url = useNavigate();  
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [open, setOpen] = useState(false);
-  const [formName, setFormName] = useState('Student');
+  const [formName, setFormName] = useState('');
+  const [formNameInstance, setFormNameInstance] = useState('');
+  const [formNameInstanceID, setFormNameInstanceID] = useState(null);
   const [formNameChange, setFormNameChange] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedFormField, setSelectedFormField] = useState(null);
   const [formdesign, setFormdesign] = useState([
-    {
-      fieldname: 'Name',
-      required: true,
-      value: null,
-      id: 'Name',
-      dropdown: false,
-      inputtype: 'text',
-      category: ['sdhh', 'benon', 'jjdsjksdjk', 'hsdjhsdjh'],
-    },
-    {
-      fieldname: 'Contact',
-      required: true,
-      value: null,
-      id: 'Contact',
-      dropdown: false,
-      inputtype: 'text',
-      category: ['sdhh', 'benon', 'jjdsjksdjk', 'hsdjhsdjh'],
-    },
+    
   ]);
   const fetchData = async () => {
     try {
-      const responseD = await FormDesignAPI(formid);
+      const idForm = await decryptFormID(formid)
+      const responseD = await FormDesignAPI(idForm.data);
+      if (idForm.name !=='Default'){
+        setFormNameInstance(`-${idForm.name}`);
+      }
+     setFormNameInstanceID(idForm.id)
       const responseData = responseD['data'];
       const formName1 = responseD['name']
     
@@ -125,8 +115,12 @@ const FormFill = () => {
     const formValues = categories.map((item) => ({
       value: item.value,
       id: item.id,
+      formInstance:formNameInstanceID
     }));
-    alert(JSON.stringify(formValues));
+    formValues.push({'formInstance':formNameInstanceID})
+    try{
+      window.location.reload()
+    }catch(e){}
   };
 
 
@@ -157,7 +151,7 @@ if (display){
     <Grid container spacing={2}>
 <Grid item xs={8}>
 <item><form  onSubmit={handleSubmit} className='form'> 
-<div style={{display:'flex', flexDirection:'row'}}><h2 style={{fontSize:'29px'}}> {formName} </h2></div>
+<div style={{display:'flex', flexDirection:'row'}}><h2 style={{fontSize:'29px'}}> {formName}<span style={{ fontSize:'20px', fontWeight:'lighter'}}>{formNameInstance}</span> </h2></div>
 
 <FormControl  fullWidth sx={{ m:1,  }} variant="standard">
 

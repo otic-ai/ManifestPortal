@@ -239,10 +239,13 @@ function formatColumnName(name) {
              onClick={async()=>{
               try{
                 const id = getFormIdById(params.id);
+              await  setQrOptionsInstance([])
                 const responseData1 = await FormInstancesAPI(id);
               //  alert(JSON.stringify(responseData1.data))
-               await setQrOptionsInstance(responseData1.data);
-                alert(JSON.stringify(qrOptionsInstance));
+              for (let item of responseData1.data ){
+                qrOptionsInstance.push(item)
+              }
+            
                 handleClickOpenQR()
               } catch(e){
                 alert('An error occurred')

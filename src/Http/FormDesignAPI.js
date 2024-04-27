@@ -31,3 +31,18 @@ export const SubmitFormDesignAPI = async (id,design,name)=>{
 
 }
 
+
+export const decryptFormID = async (id)=>{
+    try{
+        const axiosInstance = await createAxiosInstance()
+        const response = await axiosInstance.post('decryptFormID',{'id':id},{
+            withCredentials:false
+        })
+        
+        return response.data
+    } catch(e){
+        alert(e)
+    }
+   
+
+}
