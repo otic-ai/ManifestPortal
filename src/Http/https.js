@@ -3,7 +3,7 @@ import axios from "axios";
 import { auth, db } from "../Firebase";
 import { doc, getDoc } from "@firebase/firestore";
 
-const baseURL = 'http://173.230.140.201:10002/';
+const baseURL = 'https://beta.otictech.com/';
 
 export const getUrl = async () => {
     try {
@@ -24,7 +24,7 @@ export const getUrl = async () => {
 
 const createAxiosInstance = async () => {
     try {
-        const host = baseURL//await getUrl();
+        const host = await getUrl();
         const user = await auth.currentUser;
         const token =  await user.getIdToken() ;
        
