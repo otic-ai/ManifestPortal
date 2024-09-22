@@ -3,7 +3,7 @@ import axios from "axios";
 import { auth, db } from "../Firebase";
 import { doc, getDoc } from "@firebase/firestore";
 
-const baseURL = 'http://127.0.0.1:8000/';
+const baseURL = 'http://173.230.140.201:10002/';
 
 export const getUrl = async () => {
     try {
@@ -24,12 +24,12 @@ export const getUrl = async () => {
 
 const createAxiosInstance = async () => {
     try {
-        const host = 'http://127.0.0.1:8000/'//await getUrl();
+        const host = baseURL//await getUrl();
         const user = await auth.currentUser;
         const token =  await user.getIdToken() ;
        
         const axiosInstance = axios.create({
-            baseURL: host ? host : baseURL,
+            baseURL:  baseURL,
             headers: {
                 "Accept": "application/json",
                 "Authorization": `${token}`,
@@ -44,3 +44,7 @@ const createAxiosInstance = async () => {
 };
 
 export default createAxiosInstance;
+
+
+
+

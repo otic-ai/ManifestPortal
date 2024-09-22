@@ -331,7 +331,11 @@ React.useEffect(() => {
     <Box sx={{ marginLeft:'1%', width: '99%' }}>
         <DataGrid autoHeight  components={{
       Toolbar: GridToolbar,
-    }} slots={{ toolbar: GridToolbar }} processRowUpdate={(updatedRow, originalRow)=>{
+    }} slots={{ toolbar: GridToolbar }}
+    csvOptions={{
+      fileName: 'custom_file_name', // Set your desired CSV file name here
+    }}
+    processRowUpdate={(updatedRow, originalRow)=>{
           const value = updatedRow['id'];
           
         }} editMode="row" rows={rows} columns={columns}   />
