@@ -52,6 +52,7 @@ export default function FormManagement({ view,form }) {
 // Consider an alternative way to handle closing the dialog
   };
   const fetchData = async () => {
+    
     try {
       const responseData = await FormManagementAPI(form);
       const formattedData = responseData.data.map(item => ({
@@ -89,10 +90,11 @@ export default function FormManagement({ view,form }) {
             const formData = new FormData(event.currentTarget);
             const formJson = Object.fromEntries(formData.entries());
             const keys = Object.keys(formJson);
-          //  alert(JSON.stringify(formJson));
+         //   alert(JSON.stringify(formJson));
           const newDate = {
             ...formJson,
-            formid:form
+            formid:form,
+            instance
           }
           await FormManagementSubmitAPI(newDate)
             handleClose();
@@ -154,17 +156,17 @@ export default function FormManagement({ view,form }) {
                   <Switch
                     checked={item.is_active}
                     onChange={handleSwitchChange(index)}
-                    name={`${item.name}`}
+                    name={`choice-${item.name}}`}
                   />
                 }
-                label={item.name}
+                label={ item.name }
               />
               {item.is_active && ( // Conditionally render DateTimePicker if item.default is true
               
                 <LocalizationProvider dateAdapter={AdapterDayjs}
                 >
                 <DateTimePicker
-                  name={`date-${index}`}
+                  name={`choice-${item.name}-date`}
                   label="Close Date"
                   defaultValue={item.close_date ? item.close_date : null} // Set the default value
                 />

@@ -85,9 +85,10 @@ const FormFill = () => {
         setDisplay(true);
         fetchData()
       } else {
-        setUserLoggedIn(false);
-        setDisplay(false)
-        url('/login');
+        setUserLoggedIn(true);
+        setDisplay(true)
+        fetchData()
+      //  url('/login');
       }
     });
 
@@ -147,7 +148,9 @@ const handleDeleteField = () => {
 if (display){
   return (
      <div >
-    <Header activeIndex={1} />
+    {
+      //<Header activeIndex={1} />
+    }
     <div className='top-header'>
     
     <Box sx={{ flexGrow: 1 }}>

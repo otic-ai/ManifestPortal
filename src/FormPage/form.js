@@ -192,7 +192,7 @@ function formatColumnName(name) {
             headerName: formatColumnName(key), 
           // flex: 0.4,
             editable: true,
-         width: 150,
+         width:  key.length * 20,
             headerClassName: "custom-header"
         }))
 ];
@@ -302,8 +302,8 @@ React.useEffect(() => {
       <div  >
        
   <Header activeIndex={1}  />
-  {//<FormManagement view={open} form={formManagementID}/>
-  }
+  <FormManagement view={open} form={formManagementID}/>
+  
   <SimpleDialog
         selectedValue={selectedValue}
         open={openQR}
