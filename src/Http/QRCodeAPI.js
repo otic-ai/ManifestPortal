@@ -10,7 +10,7 @@ export const QRCodeGenerationAPI = async (id)=>{
         
         return response.data
     } catch(e){
-        alert(e)
+        console.log('error',e)
     }
    
 }
@@ -24,7 +24,7 @@ export const FormInstancesAPI = async (id)=>{
         
         return response.data
     } catch(e){
-        alert(e)
+        console.log('error',e)
     }
    
 }

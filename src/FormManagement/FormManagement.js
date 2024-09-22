@@ -160,6 +160,7 @@ export default function FormManagement({ view,form }) {
                 label={item.name}
               />
               {item.is_active && ( // Conditionally render DateTimePicker if item.default is true
+              
                 <LocalizationProvider dateAdapter={AdapterDayjs}
                 >
                 <DateTimePicker

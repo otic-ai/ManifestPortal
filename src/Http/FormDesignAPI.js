@@ -10,7 +10,7 @@ export const FormDesignAPI = async (id)=>{
         
         return response.data
     } catch(e){
-        alert(e)
+        console.log('error',e)
     }
    
 
@@ -25,7 +25,7 @@ export const SubmitFormDesignAPI = async (id,design,name)=>{
         window.location.reload();
         return response.data['data']
     } catch(e){
-        alert(e)
+        console.log('error',e)
     }
    
 
@@ -41,7 +41,7 @@ export const decryptFormID = async (id)=>{
         
         return response.data
     } catch(e){
-        alert(e)
+        console.log('error',e)
     }
    
 

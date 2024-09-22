@@ -18,6 +18,9 @@ import SignInSide from './Login/login';
 import SignUp from './SignUp/signup';
 import ResetPassword from './ResetPassword/Resetpassword';
 import FormFill from './FormFill/FormFill';
+import HomeFinal from './HomeFinal/Home';
+import Admin from './AdminPage/Admin';
+import Profile from './Profile/Profile';
 
 
 
@@ -29,11 +32,12 @@ function App() {
     <Routes>
     <Route path="/signup" element={<SignUp />} />
     <Route path="/login" element={<SignInSide />} />
-   
+    <Route path="/admin" element={<Admin />} />
       <Route path="/reset" element={<ResetPassword />} />
-      <Route path="/" element={<FormHomePage />} />
+      <Route path="/" element={<HomeFinal />} />
       <Route path="/qrcode/:code" element={<QRCod />} />
       <Route path="/data/:formid" element={<FormData />} />
+      <Route path="/profile/:id" element={<Profile />} />
       <Route path="/formview/:formid" element={<FormView />} />
       <Route path="/form/:formid" element={<FormFill />} />
     </Routes>

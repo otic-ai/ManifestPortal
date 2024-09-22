@@ -25,6 +25,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../Firebase';
 import { decryptFormID, FormDesignAPI, SubmitFormDesignAPI } from '../Http/FormDesignAPI';
+import { submitAPI } from '../Http/SubmitFormData';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -110,15 +111,17 @@ const FormFill = () => {
     setCategories(updatedCategories);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault();
     const formValues = categories.map((item) => ({
       value: item.value,
       id: item.id,
-      formInstance:formNameInstanceID
+    
     }));
-    formValues.push({'formInstance':formNameInstanceID})
+   formValues.push({'formInstance':formNameInstanceID})
+    
     try{
+      await submitAPI(formValues)
       window.location.reload()
     }catch(e){}
   };

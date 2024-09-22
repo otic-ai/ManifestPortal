@@ -27,7 +27,8 @@ const Sidebartask = ({activeIndex }) => {
   //page:'/'},
   {tagName: 'Forms',  tag: <EditNoteIcon className='icon'/>,
   page:'/'},
- 
+  {tagName: 'Admin',  tag: <EditNoteIcon className='icon'/>,
+    page:'/admin'},
   {tagName: 'LogOut',  tag: <LogoutIcon className='icon'/>,
   page:'/login'},
    

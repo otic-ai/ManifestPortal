@@ -11,6 +11,10 @@ import InputBase from '@mui/material/InputBase';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import './header.css';
 import Sidebartask from '../Sidebar/sidebar';
+import Autocomplete from '@mui/material/Autocomplete';
+import { TextField } from '@mui/material';
+import { ChangeManifestAPI, getManifestAPI } from '../Http/ChangeManifest';
+import { useNavigate } from 'react-router-dom';
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
@@ -52,11 +56,38 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 const Header = ({activeIndex}) => {
   const [isOpen, setIsOpen] = useState(false);
   const sidebarRef = useRef(null);
-
+  const [top100Films, setTop100Films] = useState([]);
+  const [defaultManifest, setDefaultManifest] = useState(null);
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
- 
+
+  useEffect(()=>{
+    const fetchData = async()=>{
+      const response = await getManifestAPI()
+      
+      setTop100Films(response['data'])
+      setDefaultManifest(response['default'])
+    }
+    fetchData()
+  },[])
+  const handleSelect = async(event, value) => {
+    if (value) {
+     
+await ChangeManifestAPI(JSON.stringify(value))
+      window.location.reload();
+
+    }
+  };
+
+  const defaultProps = {
+    options: top100Films,
+    getOptionLabel: (option) => option.title,
+  };
+  const flatProps = {
+    options: top100Films.map((option) => option.title),
+  };
+  const [value, setValue] = React.useState(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -71,7 +102,7 @@ const Header = ({activeIndex}) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-
+  const url = useNavigate();
   return (
     <div>
     <div style={{ position: 'fixed', width: '100%', zIndex: 1001, top: 0 , overflow:'hidden'}}>
@@ -94,14 +125,31 @@ const Header = ({activeIndex}) => {
             </img>
             <Typography className='header-title' sx={{ flexGrow: 1 }}>
             </Typography>
+          
             <Search>
-              <SearchIconWrapper>
-                <SearchIcon style={{ color: 'orange' }} />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
-              />
+            <Autocomplete
+         onChange={handleSelect}     
+  style={{ color: 'white', width: '50vw', minWidth: '200px', maxWidth: '300px' }}
+  {...defaultProps}
+  id="blur-on-select"
+  blurOnSelect
+  renderInput={(params) => (
+    <TextField
+      {...params}
+      label="Search "
+      variant="standard"
+      InputProps={{
+        ...params.InputProps,
+        style: { color: 'white' }, // Set input text color to white
+      }}
+      InputLabelProps={{
+        style: { color: 'white' }, // Set label color to white
+      }}
+    />
+  )}
+/>
+
+            
             </Search>
             <IconButton
               size="large"
@@ -109,7 +157,9 @@ const Header = ({activeIndex}) => {
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-             // onClick={handleMenuClick}
+              onClick={()=>{
+                url(`/profile/${defaultManifest}`)
+              }}
             //  onClick={handleMenu}
             color="inherit"
             >

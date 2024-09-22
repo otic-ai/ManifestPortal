@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../Firebase';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { registerUser } from '../Http/registerUser';
 
 function Copyright(props) {
   return (
@@ -43,8 +44,8 @@ export default function SignUp() {
       password: data.get('password'),
     });
     const displayName =  data.get('firstName') +' '+ data.get('lastName')
-    alert(displayName)
-    await createUserWithEmailAndPassword(auth,data.get('email'),data.get('password')) .then((userCredential) => {
+    
+    await createUserWithEmailAndPassword(auth,data.get('email'),data.get('password')) .then(async(userCredential) => {
         // Signed in
         const user = userCredential.user;
         console.log(user);
@@ -58,6 +59,8 @@ export default function SignUp() {
           .catch((error) => {
             alert('Error updating profile:', error);
           });
+          data.append('uid', `${uid}`);
+          await registerUser(data) 
         url("/login")
         // ...
     })

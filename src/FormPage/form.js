@@ -77,7 +77,7 @@ function countOccurrences(data) {
 }
   
 
- function FormHomePage({ data }) {
+ function FormHomePage({ data , type1}) {
   const [open, setOpen] = React.useState(false);
   const [qrOptions, setQrOptions] = React.useState(false); 
   const [qrOptionsID, setQrOptionsID] = React.useState(null); 
@@ -88,7 +88,7 @@ function countOccurrences(data) {
   const [qrOptionsInstance, setQrOptionsInstance] = React.useState([]); 
   const [openQR, setOpenQR] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState(null);
-
+  
   const handleClickOpenQR = () => {
     setOpenQR(true);
   };
@@ -114,25 +114,26 @@ function countOccurrences(data) {
   const [rows,setRows]= React.useState(data == null ? [
     {id:''}
   ]:data)
-  const fetchData = async () => {
-    try {
-      const responseData = await FormListAPI();
-   if (responseData.length ===0){}else{
-    const formattedRows =await responseData.map((row, index) => ({
-      ...row,
-    
-      id: (index + 1).toString(),
-    }));
-    setRows(formattedRows);
-   }
-  
-    } catch (error) {
-      console.error('Error fetching form data:', error);
+ 
+  const getdata =() => {
+    const fetchData = async () => {
+      try {
+        const responseData = await FormListAPI();
+     if (responseData.length ===0){}else{
+      const formattedRows =await responseData.map((row, index) => ({
+        ...row,
       
-    }
-  };
-  React.useEffect(() => {
+        id: (index + 1).toString(),
+      }));
+      setRows(formattedRows);
+     
+     }
     
+      } catch (error) {
+        console.error('Error fetching form data:', error);
+        
+      }
+    };
     if (data) {
      
       const formattedRows = data.map((row, index) => ({
@@ -144,7 +145,7 @@ function countOccurrences(data) {
     } else{
    fetchData()
     }
-  }, [data]);
+  }
   function getFormIdById(id) {
     const row = rows.find(row => row.id === id);
     return row ? row.formid : null;
@@ -251,7 +252,7 @@ function formatColumnName(name) {
                 alert('An error occurred')
               }
              
-          //   url(`/qrcode/${getFormIdById(params.id)}`)
+          //  url(`/qrcode/${getFormIdById(params.id)}`)
             }}
              showInMenu
            /> 
@@ -283,7 +284,7 @@ addActions()
 React.useEffect(() => {
   const unsubscribe = onAuthStateChanged(auth, (user) => {
     if (user) {
-      
+      getdata()
       setDisplay(true)
     } else {
      

@@ -12,7 +12,7 @@ export const FormManagementAPI = async (id)=>{
         return response.data
     } catch(e){
         console.log(e)
-     alert(e)
+        console.log('error',e)
     }
    
 }

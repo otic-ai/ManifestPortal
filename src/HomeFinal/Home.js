@@ -6,32 +6,22 @@ import { FormDataViewAPI } from '../Http/ViewFormData';
 import Header from '../Header/header';
 import FormHomePage from '../FormPage/form';
 
-const FormData = () => {
-  const { formid } = useParams();
+const HomeFinal= () => {
+  
   const [display, setDisplay] = React.useState(false);
   const [data, setData] = React.useState([
-    { 'id':'4' },
+    { 'id':'' },
    
   ]);
   const url = useNavigate();
   
-  const fetchData = async () => {
-    try {
-      const responseData = await FormDataViewAPI(formid);
-   await  setData(responseData.data);
-
-  // alert(JSON.stringify(responseData.data))
-    } catch (error) {
-      console.error('Error fetching form data:', error);
-     // alert(error)
-    }
-  };
+ 
 
   React.useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async(user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in
-     await   fetchData()
+        
         setDisplay(true);
       } else {
         // User is not signed in, redirect to login
@@ -46,16 +36,15 @@ const FormData = () => {
   }, []);
 
  
-
   return (
     <div style={{ display: display ? 'block' : 'none' }}>
-      
+    
       <div className='top-header'>
-        {display ? ( <FormHomePage data={data}  />):(<div />)}
-     
+        
+      <FormHomePage  type1={true} />
       </div>
     </div>
   );
 };
 
-export default FormData;
+export default HomeFinal;

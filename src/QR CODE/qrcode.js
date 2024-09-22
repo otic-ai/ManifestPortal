@@ -39,7 +39,7 @@ function QRCod() {
     }
   } 
   React.useEffect(() => {
-    const intervalId = setInterval(fetchData, 2 * 60 * 1000);
+   // const intervalId = setInterval(fetchData, 2 * 60 * 1000);
     const unsubscribe = onAuthStateChanged(auth, (user) => {
     
       if (user) {
@@ -54,7 +54,7 @@ function QRCod() {
 
     return () => {
       // Clean up the auth state listener
-      clearInterval(intervalId);
+    //  clearInterval(intervalId);
       unsubscribe();
     };
   }, []);

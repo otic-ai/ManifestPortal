@@ -3,7 +3,7 @@ import axios from "axios";
 import { auth, db } from "../Firebase";
 import { doc, getDoc } from "@firebase/firestore";
 
-const baseURL = "https://4b82-102-134-149-56.ngrok-free.app/api/";
+const baseURL = 'http://127.0.0.1:8000/';
 
 export const getUrl = async () => {
     try {
@@ -11,7 +11,7 @@ export const getUrl = async () => {
         const docSnapshot = await getDoc(docRef); // Initialize `doc` here
         if (docSnapshot.exists()) {
             const data = docSnapshot.data();
-            return data['host']+'/';
+            return baseURL//data['host']+'/';
         } else {
             console.log('No such document!');
             throw new Error('No such document!');
@@ -24,7 +24,7 @@ export const getUrl = async () => {
 
 const createAxiosInstance = async () => {
     try {
-        const host = await getUrl();
+        const host = 'http://127.0.0.1:8000/'//await getUrl();
         const user = await auth.currentUser;
         const token =  await user.getIdToken() ;
        

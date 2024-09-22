@@ -1,11 +1,13 @@
+import { jsx } from "@emotion/react"
 import createAxiosInstance from "./https"
 
-export const FormDataViewAPI = async (id)=>{
+export const ChangeManifestAPI = async (id)=>{
     try{
         const axiosInstance = await createAxiosInstance()
-        const response = await axiosInstance.post('formdataview',{'id':id},{
+        const response = await axiosInstance.post('changeManifest',{'id':id},{
             withCredentials:false
         })
+        
         return response.data
     } catch(e){
         console.log('error',e)
@@ -14,13 +16,14 @@ export const FormDataViewAPI = async (id)=>{
 
 }
 
-export const FormListAPI = async ()=>{
+export const getManifestAPI = async ()=>{
     try{
         const axiosInstance = await createAxiosInstance()
-        const response = await axiosInstance.post('forms',{'id':''},{
+        const response = await axiosInstance.get('getManifests',{
             withCredentials:false
         })
-        return response.data['data']
+        
+        return response.data
     } catch(e){
         console.log('error',e)
     }

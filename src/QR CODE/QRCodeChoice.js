@@ -26,7 +26,9 @@ export function SimpleDialog(props) {
 
   const handleListItemClick = (value) => {
     onClose(value);
-  url(`/form/${value}`)
+  
+ // url(`/form/${value}`)
+  url(`/qrcode/${value}`)
   };
 
   return (
