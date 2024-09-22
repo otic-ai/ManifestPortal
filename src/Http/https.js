@@ -3,7 +3,7 @@ import axios from "axios";
 import { auth, db } from "../Firebase";
 import { doc, getDoc } from "@firebase/firestore";
 
-const baseURL = 'https://beta.otictech.com/';
+const baseURL = 'https://manifestapi.otictech.com/';
 
 export const getUrl = async () => {
     try {
