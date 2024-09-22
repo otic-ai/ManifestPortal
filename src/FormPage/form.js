@@ -181,7 +181,7 @@ function formatColumnName(name) {
     {
         field: 'id',
         headerName: '',
-        flex: 0.1,
+      //  flex: 0.1,
         editable: false,
         headerClassName: "custom-header"
     },
@@ -190,8 +190,9 @@ function formatColumnName(name) {
         .map(key => ({
             field: key,
             headerName: formatColumnName(key), 
-            flex: 0.1,
+          // flex: 0.4,
             editable: true,
+         width: 150,
             headerClassName: "custom-header"
         }))
 ];
@@ -301,7 +302,8 @@ React.useEffect(() => {
       <div  >
        
   <Header activeIndex={1}  />
-  <FormManagement view={open} form={formManagementID}/>
+  {//<FormManagement view={open} form={formManagementID}/>
+  }
   <SimpleDialog
         selectedValue={selectedValue}
         open={openQR}
@@ -332,9 +334,7 @@ React.useEffect(() => {
         <DataGrid autoHeight  components={{
       Toolbar: GridToolbar,
     }} slots={{ toolbar: GridToolbar }}
-    csvOptions={{
-      fileName: 'custom_file_name', // Set your desired CSV file name here
-    }}
+   
     processRowUpdate={(updatedRow, originalRow)=>{
           const value = updatedRow['id'];
           

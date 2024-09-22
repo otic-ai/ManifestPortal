@@ -105,7 +105,7 @@ await ChangeManifestAPI(JSON.stringify(value))
   const url = useNavigate();
   return (
     <div>
-    <div style={{ position: 'fixed', width: '100%', zIndex: 1001, top: 0 , overflow:'hidden'}}>
+    <div style={{ position: 'fixed', width: '100vw', zIndex: 1001, top: 0 , overflow:'hidden'}}>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar style={{ background: 'black' }} className="appbar" position="static">
           <Toolbar>
